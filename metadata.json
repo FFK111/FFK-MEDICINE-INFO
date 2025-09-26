@@ -1,0 +1,7 @@
+{
+  "name": "FFK Medicine Info",
+  "description": "An AI-powered medical guide that provides simple, easy-to-understand information about medicines in multiple languages, with an option to identify medicine from a photo.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

@@ -1,0 +1,85 @@
+
+import { GoogleGenAI, Type } from "@google/genai";
+import { Language, MedicineInfo } from '../types';
+import { fileToBase64 } from "../utils/fileUtils";
+
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+
+const medicineInfoSchema = {
+  type: Type.OBJECT,
+  properties: {
+    composition: {
+      type: Type.STRING,
+      description: "The major active ingredient(s) of the medicine.",
+    },
+    uses: {
+      type: Type.STRING,
+      description: "The common medical uses and conditions the medicine treats.",
+    },
+    sideEffects: {
+      type: Type.STRING,
+      description: "Important but simple side effects people should be aware of.",
+    },
+    timeToTake: {
+      type: Type.STRING,
+      description: "General guidance on when to take the medicine (e.g., morning, after meals).",
+    },
+    disclaimer: {
+        type: Type.STRING,
+        description: "The exact disclaimer text: 'This information is for educational purposes only. Please use medicine strictly as prescribed by a qualified doctor.'",
+    }
+  },
+  required: ["composition", "uses", "sideEffects", "timeToTake", "disclaimer"],
+};
+
+const languageMap: Record<Language, string> = {
+    [Language.ENGLISH]: 'English',
+    [Language.HINDI]: 'Hindi',
+    [Language.URDU]: 'Urdu',
+};
+
+export async function getMedicineInfo(
+  query: string,
+  language: Language,
+  imageFile: File | null
+): Promise<MedicineInfo> {
+  const langName = languageMap[language];
+  let prompt = '';
+  const parts: any[] = [];
+
+  if (imageFile) {
+    const base64Image = await fileToBase64(imageFile);
+    parts.push({
+      inlineData: {
+        mimeType: imageFile.type,
+        data: base64Image,
+      },
+    });
+    prompt = `Identify the medicine in this image and provide a professional, simple, and easy-to-understand explanation in ${langName}.`;
+  } else {
+    prompt = `Provide a professional, simple, and easy-to-understand explanation for the medicine "${query}" in ${langName}.`;
+  }
+  
+  parts.push({ text: prompt });
+
+  const systemInstruction = `You are an AI medical guide. Your response must be structured as a JSON object adhering to the provided schema. Always include these sections: 'Composition', 'Uses', 'Major Side Effects', 'Recommended Time to Take'. The 'Disclaimer' section must contain this exact text: "This information is for educational purposes only. Please use medicine strictly as prescribed by a qualified doctor." If responding in Hindi or Urdu, translate this disclaimer as well.`;
+
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: { parts: parts },
+    config: {
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: medicineInfoSchema
+    }
+  });
+
+  try {
+    const jsonText = response.text.trim();
+    const parsedJson = JSON.parse(jsonText);
+    return parsedJson as MedicineInfo;
+  } catch (e) {
+    console.error("Failed to parse Gemini response as JSON:", response.text);
+    throw new Error("The AI returned an invalid response format.");
+  }
+}

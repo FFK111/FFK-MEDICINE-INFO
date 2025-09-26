@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { Language, MedicineInfo } from '../types';
 import { fileToBase64 } from "../utils/fileUtils";
@@ -27,6 +26,10 @@ const medicineInfoSchema = {
     disclaimer: {
         type: Type.STRING,
         description: "The exact disclaimer text: 'This information is for educational purposes only. Please use medicine strictly as prescribed by a qualified doctor.'",
+    },
+    safetyInCondition: {
+        type: Type.STRING,
+        description: "Information regarding the medicine's safety for the specified condition. This field should only be included if a condition is provided in the prompt."
     }
   },
   required: ["composition", "uses", "sideEffects", "timeToTake", "disclaimer"],
@@ -41,11 +44,13 @@ const languageMap: Record<Language, string> = {
 export async function getMedicineInfo(
   query: string,
   language: Language,
-  imageFile: File | null
+  imageFile: File | null,
+  condition: string
 ): Promise<MedicineInfo> {
   const langName = languageMap[language];
   let prompt = '';
   const parts: any[] = [];
+  const hasCondition = condition && condition.trim().length > 0;
 
   if (imageFile) {
     const base64Image = await fileToBase64(imageFile);
@@ -60,9 +65,13 @@ export async function getMedicineInfo(
     prompt = `Provide a professional, simple, and easy-to-understand explanation for the medicine "${query}" in ${langName}.`;
   }
   
+  if (hasCondition) {
+      prompt += ` Also, specifically address its safety for someone with this condition: "${condition}".`;
+  }
+
   parts.push({ text: prompt });
 
-  const systemInstruction = `You are an AI medical guide. Your response must be structured as a JSON object adhering to the provided schema. Always include these sections: 'Composition', 'Uses', 'Major Side Effects', 'Recommended Time to Take'. The 'Disclaimer' section must contain this exact text: "This information is for educational purposes only. Please use medicine strictly as prescribed by a qualified doctor." If responding in Hindi or Urdu, translate this disclaimer as well.`;
+  const systemInstruction = `You are an AI medical guide. Your response must be structured as a JSON object adhering to the provided schema. Always include these sections: 'Composition', 'Uses', 'Major Side Effects', 'Recommended Time to Take'. The 'Disclaimer' section must contain this exact text: "This information is for educational purposes only. Please use medicine strictly as prescribed by a qualified doctor." If a specific medical condition is mentioned by the user, you must also provide information in the 'safetyInCondition' field. If responding in Hindi or Urdu, translate this disclaimer and all other content as well.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',

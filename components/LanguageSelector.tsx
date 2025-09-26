@@ -15,7 +15,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ selectedLang
   ];
 
   return (
-    <div className="flex justify-center space-x-2 mb-6">
+    <div className="flex flex-wrap justify-center space-x-2 mb-6">
       {languages.map((lang) => (
         <button
           key={lang.id}

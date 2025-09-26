@@ -103,7 +103,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
               type="text"
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
-              placeholder="Optional: Add a condition (e.g., pregnancy)"
+              placeholder="Optional: Add a condition (e.g., kidney issue)"
               className="w-full p-2 bg-slate-800/50 border border-slate-100/10 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-slate-300 placeholder-slate-400 transition-shadow"
               disabled={isLoading || isIdentifying}
           />

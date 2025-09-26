@@ -33,7 +33,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/70 backdrop-blur-md rounded-xl shadow-lg p-2 mb-8 border border-gray-200">
+    <form onSubmit={handleSubmit} className="bg-white/30 backdrop-blur-xl rounded-2xl shadow-lg p-2 mb-8 border border-white/30">
       <div className="flex items-center space-x-2">
         <input
           type="text"
@@ -45,8 +45,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 setFileName('');
               }
           }}
-          placeholder="Enter medicine name (e.g., Adol, Disprin)"
-          className="flex-grow p-3 bg-transparent focus:outline-none text-gray-700 placeholder-gray-400"
+          placeholder="Enter medicine name..."
+          className="flex-grow p-3 bg-transparent focus:outline-none text-slate-800 placeholder-slate-500"
           disabled={isLoading || !!imageFile}
         />
         <input
@@ -62,14 +62,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
           onClick={handleImageButtonClick}
           disabled={isLoading}
           aria-label="Upload medicine image"
-          className="p-3 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors disabled:opacity-50"
+          className="p-3 rounded-lg text-slate-600 hover:bg-black/5 transition-colors disabled:opacity-50"
         >
           <CameraIcon />
         </button>
         <button
           type="submit"
           disabled={isLoading || (!query && !imageFile)}
-          className="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-100"
+          className="bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-cyan-500 transition-all duration-300 disabled:from-blue-300 disabled:to-cyan-300 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-100 shadow-md disabled:shadow-none"
         >
           {isLoading ? (
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
@@ -78,15 +78,15 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
           )}
         </button>
       </div>
-       {fileName && <span className="text-sm text-gray-500 truncate ml-4 py-1 block">{fileName}</span>}
+       {fileName && <span className="text-sm text-slate-600 truncate ml-4 py-1 block">{fileName}</span>}
 
        <div className="mt-3 mx-2 mb-1">
           <input
               type="text"
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
-              placeholder="Optional: Add condition (e.g., pregnancy, kidney disease)"
-              className="w-full p-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-gray-700 placeholder-gray-400 transition-shadow"
+              placeholder="Optional: Add condition (e.g., pregnancy)"
+              className="w-full p-2 bg-white/40 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-slate-700 placeholder-slate-500 transition-shadow"
               disabled={isLoading}
           />
       </div>

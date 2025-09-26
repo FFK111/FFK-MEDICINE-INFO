@@ -6,8 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FFK Medicine Info</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-      @keyframes fade-in-up {
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.5s ease-out forwards;
+      }
+      @keyframes fade-in-slide-up {
         from {
           opacity: 0;
           transform: translateY(20px);
@@ -17,23 +30,26 @@
           transform: translateY(0);
         }
       }
-      .animate-fade-in-up {
-        animation: fade-in-up 0.5s ease-out forwards;
+      .animate-fade-in-slide-up {
+        animation: fade-in-slide-up 0.5s ease-out forwards;
         opacity: 0;
       }
       @keyframes float {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-15px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
       }
       .animate-float {
         animation: float 6s ease-in-out infinite;
+      }
+      @keyframes shimmer {
+          0% { background-position: -1000px 0; }
+          100% { background-position: 1000px 0; }
+      }
+      .animate-shimmer {
+        animation: shimmer 2s infinite linear;
+        background: linear-gradient(to right, transparent 0%, #ffffff44 50%, transparent 100%);
+        background-size: 1000px 100%;
       }
     </style>
   <script type="importmap">

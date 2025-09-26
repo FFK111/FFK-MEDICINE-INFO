@@ -28,8 +28,8 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
 
   if (error) {
     return (
-      <div className="text-center p-8 bg-red-900/30 backdrop-blur-lg border border-red-500/50 text-red-200 rounded-2xl shadow-lg animate-fade-in-slide-up">
-        <h3 className="font-bold text-lg text-red-100">Error</h3>
+      <div className="text-center p-8 bg-red-100/80 backdrop-blur-lg border border-red-500/50 text-red-800 rounded-2xl shadow-lg animate-fade-in-slide-up">
+        <h3 className="font-bold text-lg text-red-900">Error</h3>
         <p>{error}</p>
       </div>
     );
@@ -37,8 +37,8 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
 
   if (!medicineInfo) {
     return (
-      <div className="text-center p-8 bg-slate-800/30 backdrop-blur-lg border border-slate-100/10 text-slate-300 rounded-2xl shadow-lg">
-        <h3 className="font-semibold text-lg text-slate-100">Welcome!</h3>
+      <div className="text-center p-8 bg-white/50 backdrop-blur-lg border border-black/10 text-slate-700 rounded-2xl shadow-lg">
+        <h3 className="font-semibold text-lg text-slate-900">Welcome!</h3>
         <p>Enter a medicine name or upload a photo to get started.</p>
       </div>
     );

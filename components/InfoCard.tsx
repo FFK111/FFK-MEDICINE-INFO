@@ -45,11 +45,11 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
             {icon}
           </div>
         </div>
-        <h3 className={`flex-grow text-lg font-extrabold uppercase tracking-wider ${theme.titleText}`}>
+        <h3 className={`flex-grow text-xl font-extrabold uppercase tracking-wider ${theme.titleText}`}>
           {title}
         </h3>
       </div>
-      <p className={`text-base whitespace-pre-wrap ${theme.contentText}`}>
+      <p className={`text-xl whitespace-pre-wrap ${theme.contentText}`}>
         {content}
       </p>
     </div>

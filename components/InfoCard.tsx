@@ -10,7 +10,7 @@ interface InfoCardProps {
 export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, variant = 'default' }) => {
   const variants = {
     default: {
-      bg: 'bg-blue-900/20',
+      bg: 'bg-sky-950/30',
       border: 'border-blue-400/60',
       iconBg: 'bg-blue-500/20',
       iconText: 'text-blue-300',
@@ -18,7 +18,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       contentText: 'text-slate-300',
     },
     disclaimer: {
-      bg: 'bg-yellow-900/20',
+      bg: 'bg-amber-900/30',
       border: 'border-yellow-400/60',
       iconBg: 'bg-yellow-500/20',
       iconText: 'text-yellow-300',
@@ -26,7 +26,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       contentText: 'text-yellow-300',
     },
     safety: {
-      bg: 'bg-green-900/20',
+      bg: 'bg-teal-900/30',
       border: 'border-green-400/60',
       iconBg: 'bg-green-500/20',
       iconText: 'text-green-400',

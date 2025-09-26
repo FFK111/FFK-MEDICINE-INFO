@@ -41,6 +41,26 @@ const languageMap: Record<Language, string> = {
     [Language.URDU]: 'Urdu',
 };
 
+export async function getMedicineNameFromImage(imageFile: File): Promise<string> {
+  const base64Image = await fileToBase64(imageFile);
+  const imagePart = {
+    inlineData: {
+      mimeType: imageFile.type,
+      data: base64Image,
+    },
+  };
+  const textPart = {
+    text: "Identify the medicine in this image. Return only its brand name or generic name as a single, clean line of plain text. Do not add any extra formatting or explanation.",
+  };
+
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: { parts: [imagePart, textPart] },
+  });
+
+  return response.text.trim();
+}
+
 export async function getMedicineInfo(
   query: string,
   language: Language,
@@ -51,6 +71,10 @@ export async function getMedicineInfo(
   let prompt = '';
   const parts: any[] = [];
   const hasCondition = condition && condition.trim().length > 0;
+  
+  if (language === Language.HINDI) {
+      prompt += "Translate the content into simple, common, and easily understandable Hindi, avoiding complex medical terms. ";
+  }
 
   if (imageFile) {
     const base64Image = await fileToBase64(imageFile);
@@ -60,9 +84,9 @@ export async function getMedicineInfo(
         data: base64Image,
       },
     });
-    prompt = `Identify the medicine in this image and provide a professional, simple, and easy-to-understand explanation in ${langName}.`;
+    prompt += `Identify the medicine in this image (likely "${query}") and provide a professional, simple, and easy-to-understand explanation in ${langName}.`;
   } else {
-    prompt = `Provide a professional, simple, and easy-to-understand explanation for the medicine "${query}" in ${langName}.`;
+    prompt += `Provide a professional, simple, and easy-to-understand explanation for the medicine "${query}" in ${langName}.`;
   }
   
   if (hasCondition) {

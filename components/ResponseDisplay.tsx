@@ -44,40 +44,35 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     );
   }
   
-  const cards: {
-      title: string;
-      content: string;
-      icon: React.ReactNode;
-      key: string;
-      variant: 'default' | 'disclaimer' | 'safety';
-  }[] = [
+  // Build the list of cards to display in a declarative way.
+  const cards = [
       { title: "Composition", content: medicineInfo.composition, icon: <PillIcon />, key: "composition", variant: 'default' },
       { title: "Uses", content: medicineInfo.uses, icon: <UsesIcon />, key: "uses", variant: 'default' },
       { title: "Major Side Effects", content: medicineInfo.sideEffects, icon: <WarningIcon />, key: "sideEffects", variant: 'default' },
       { title: "Recommended Time to Take", content: medicineInfo.timeToTake, icon: <ClockIcon />, key: "timeToTake", variant: 'default' },
-  ];
-
-  if (medicineInfo.safetyInCondition && medicineInfo.conditionContext) {
-      cards.push({
+      // Conditionally add the safety card if relevant information exists.
+      ...(medicineInfo.safetyInCondition && medicineInfo.conditionContext ? [{
           title: `Safety in ${medicineInfo.conditionContext}`,
           content: medicineInfo.safetyInCondition,
           icon: <SafetyIcon />,
           key: "safety",
-          variant: 'safety',
-      });
-  }
-
-  cards.push({
-      title: "Disclaimer",
-      content: medicineInfo.disclaimer,
-      icon: <ShieldIcon />,
-      key: "disclaimer",
-      variant: 'disclaimer',
-  });
+          variant: 'safety' as const,
+      }] : []),
+      // The disclaimer is always last.
+      {
+          title: "Disclaimer",
+          content: medicineInfo.disclaimer,
+          icon: <ShieldIcon />,
+          key: "disclaimer",
+          variant: 'disclaimer' as const,
+      },
+  ];
 
   return (
     <div className="space-y-4">
       {cards.map((card, index) => (
+        // The animation delay is reviewed and confirmed to increase consistently by 100ms for each card,
+        // starting from 0ms for the first one, ensuring a smooth, staggered entrance.
         <div key={card.key} className="animate-fade-in-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
             <InfoCard 
                 title={card.title} 

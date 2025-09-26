@@ -35,7 +35,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
   const theme = variants[variant];
 
   return (
-    <div className={`rounded-2xl shadow-lg overflow-hidden p-6 border-l-4 ${theme.border} bg-white/40 backdrop-blur-xl`}>
+    <div className={`rounded-2xl shadow-lg overflow-hidden p-6 border-l-4 ${theme.border} bg-green-50/20 backdrop-blur-xl`}>
       <div className="flex items-start space-x-4">
         <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${theme.iconBg}`}>
           <div className={theme.iconText}>
@@ -43,7 +43,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
           </div>
         </div>
         <div className="flex-grow">
-          <h3 className={`text-lg font-bold uppercase tracking-wider ${theme.titleText}`}>
+          <h3 className={`text-lg font-extrabold uppercase tracking-wider ${theme.titleText}`}>
             {title}
           </h3>
           <p className={`mt-1 text-base whitespace-pre-wrap ${theme.contentText}`}>

@@ -40,13 +40,13 @@ const App: React.FC = () => {
 
 
   return (
-    <div className="relative min-h-screen font-sans text-gray-200">
+    <div className="relative min-h-screen font-sans text-slate-800">
       <Background />
       <div className="relative z-10 flex flex-col min-h-screen animate-fade-in">
         <Header />
         <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center">
           <div className="w-full max-w-3xl">
-            <p className="text-center text-gray-300 mb-6 text-base md:text-lg">
+            <p className="text-center text-slate-600 mb-6 text-base md:text-lg">
               Your AI-powered guide for clear and simple medicine information.
             </p>
             <LanguageSelector selectedLanguage={language} onSelectLanguage={setLanguage} />

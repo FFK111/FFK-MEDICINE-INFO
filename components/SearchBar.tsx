@@ -48,9 +48,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
   const currentPlaceholder = isIdentifying ? "Identifying medicine from image..." : "Enter medicine name...";
 
   return (
-    <form onSubmit={handleSubmit} className="bg-black/20 backdrop-blur-xl rounded-2xl shadow-lg p-2 mb-8 border border-white/10">
+    <form onSubmit={handleSubmit} className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-lg p-2 mb-8 border border-black/5">
       <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
-        <div className="w-full flex-grow flex items-center bg-black/20 rounded-lg">
+        <div className="w-full flex-grow flex items-center bg-white/40 rounded-lg">
           <input
             type="text"
             value={query}
@@ -61,7 +61,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full p-3 bg-transparent focus:outline-none text-gray-100 placeholder-gray-400"
+            className="w-full p-3 bg-transparent focus:outline-none text-slate-900 placeholder-slate-500"
             disabled={isLoading || isIdentifying}
           />
           <input
@@ -77,7 +77,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
             onClick={handleImageButtonClick}
             disabled={isLoading || isIdentifying}
             aria-label="Upload medicine image"
-            className="p-3 rounded-lg text-gray-400 hover:text-blue-400 transition-all duration-200 disabled:opacity-50 transform hover:scale-110 active:scale-95"
+            className="p-3 rounded-lg text-slate-500 hover:text-blue-500 transition-all duration-200 disabled:opacity-50 transform hover:scale-110 active:scale-95"
           >
             <CameraIcon />
           </button>
@@ -104,7 +104,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
               placeholder="Optional: Add a condition (e.g., kidney issue)"
-              className="w-full p-2 bg-black/20 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-gray-200 placeholder-gray-400 transition-shadow"
+              className="w-full p-2 bg-white/40 border border-black/10 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-slate-800 placeholder-slate-500 transition-shadow"
               disabled={isLoading || isIdentifying}
           />
       </div>

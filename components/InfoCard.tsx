@@ -10,32 +10,32 @@ interface InfoCardProps {
 export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, variant = 'default' }) => {
   const variants = {
     default: {
-      border: 'border-blue-400/80',
+      border: 'border-blue-400/60',
       iconBg: 'bg-blue-500/20',
-      iconText: 'text-blue-600',
-      titleText: 'text-slate-800',
-      contentText: 'text-slate-700',
+      iconText: 'text-blue-300',
+      titleText: 'text-slate-100',
+      contentText: 'text-slate-300',
     },
     disclaimer: {
-      border: 'border-yellow-400/80',
+      border: 'border-yellow-400/60',
       iconBg: 'bg-yellow-500/20',
-      iconText: 'text-yellow-700',
-      titleText: 'text-yellow-900',
-      contentText: 'text-yellow-800',
+      iconText: 'text-yellow-300',
+      titleText: 'text-yellow-100',
+      contentText: 'text-yellow-300',
     },
     safety: {
-      border: 'border-green-400/80',
+      border: 'border-green-400/60',
       iconBg: 'bg-green-500/20',
-      iconText: 'text-green-600',
-      titleText: 'text-green-900',
-      contentText: 'text-green-800',
+      iconText: 'text-green-400',
+      titleText: 'text-green-100',
+      contentText: 'text-green-300',
     },
   };
   
   const theme = variants[variant];
 
   return (
-    <div className={`rounded-2xl shadow-lg overflow-hidden p-6 border-l-4 ${theme.border} bg-green-50/20 backdrop-blur-xl`}>
+    <div className={`rounded-2xl shadow-lg overflow-hidden p-6 border-l-4 ${theme.border} bg-slate-800/40 backdrop-blur-xl`}>
       <div className="flex items-start space-x-4">
         <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${theme.iconBg}`}>
           <div className={theme.iconText}>

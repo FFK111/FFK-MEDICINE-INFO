@@ -73,8 +73,10 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   if (isLoading) {
     return (
       <div className="space-y-4">
-        {[...Array(4)].map((_, index) => (
-          <SkeletonCard key={index} />
+        {[...Array(5)].map((_, index) => (
+          <div key={index} className="animate-fade-in-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
+            <SkeletonCard />
+          </div>
         ))}
       </div>
     );

@@ -60,7 +60,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
             {icon}
           </div>
         </div>
-        <h3 className={`flex-grow text-2xl font-extrabold uppercase tracking-wider ${theme.titleText}`}>
+        <h3 className={`flex-grow text-xl font-extrabold uppercase tracking-wider ${theme.titleText}`}>
           {title}
         </h3>
         {showSpeakButton && (
@@ -90,7 +90,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
           </button>
         )}
       </div>
-      <p className={`text-2xl whitespace-pre-wrap ${theme.contentText}`}>
+      <p className={`text-lg whitespace-pre-wrap ${theme.contentText}`}>
         {content}
       </p>
     </div>

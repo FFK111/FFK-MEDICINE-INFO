@@ -9,42 +9,49 @@ import { ShieldIcon } from './icons/ShieldIcon';
 import { SafetyIcon } from './icons/SafetyIcon';
 import { SkeletonCard } from './SkeletonCard';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
-import { VoiceSelector } from './VoiceSelector';
 
 interface ResponseDisplayProps {
   isLoading: boolean;
   error: string | null;
   medicineInfo: MedicineInfo | null;
   language: Language;
-  selectedVoice: SpeechSynthesisVoice | null;
-  onSelectVoice: (voice: SpeechSynthesisVoice | null) => void;
 }
 
-export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, error, medicineInfo, language, selectedVoice, onSelectVoice }) => {
+export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, error, medicineInfo, language }) => {
   const { speak, cancel, isSpeaking, speakingText, voices } = useTextToSpeech();
   const spokenMedicineInfo = useRef<MedicineInfo | null>(null);
   const [pendingSpeech, setPendingSpeech] = useState<{ text: string; lang: Language } | null>(null);
-  const [filteredVoices, setFilteredVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
 
-  // Effect to manage available voices and the selected default
+  // Effect to automatically select the best available female voice
   useEffect(() => {
     if (voices.length > 0) {
         const langVoices = voices.filter(v => v.lang.startsWith(language));
-        setFilteredVoices(langVoices);
 
         if (langVoices.length > 0) {
-            // Only set a default if the currently selected one is invalid for the new language
-            const isSelectedVoiceValid = selectedVoice && langVoices.some(v => v.voiceURI === selectedVoice.voiceURI);
-            if (!isSelectedVoiceValid) {
-                const defaultVoice = langVoices.find(v => v.default);
-                const googleVoice = langVoices.find(v => v.name.toLowerCase().includes('google'));
-                onSelectVoice(defaultVoice || googleVoice || langVoices[0]);
-            }
+            const getVoiceScore = (voice: SpeechSynthesisVoice): number => {
+                const name = voice.name.toLowerCase();
+                let score = 0;
+                // Prefer high-quality voices
+                if (name.includes('google')) score += 10;
+                // Prefer female voices
+                if (name.includes('female')) score += 8;
+                // Add points for common female voice names
+                if (['samantha', 'susan', 'zira', 'lekha', 'fiona'].some(n => name.includes(n))) score += 5;
+                if (voice.default) score += 2;
+                // Penalize male voices
+                if (name.includes('male')) score -= 10;
+                return score;
+            };
+
+            const sortedVoices = [...langVoices].sort((a, b) => getVoiceScore(b) - getVoiceScore(a));
+            setSelectedVoice(sortedVoices[0]);
         } else {
-            onSelectVoice(null); // No voices available for this language
+            setSelectedVoice(null);
         }
     }
-  }, [language, voices, onSelectVoice, selectedVoice]);
+  }, [language, voices]);
+
 
   // Effect to queue the initial speech when new results arrive
   useEffect(() => {
@@ -135,22 +142,10 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
       },
   ];
   
-  const showVoiceSelector = medicineInfo && filteredVoices.length > 1;
-
   return (
     <div className="space-y-4">
-      {showVoiceSelector && (
-          <div className="animate-fade-in-slide-up">
-            <VoiceSelector
-                voices={filteredVoices}
-                selectedVoice={selectedVoice}
-                onSelectVoice={onSelectVoice}
-                isDisabled={isSpeaking}
-            />
-          </div>
-      )}
       {cards.map((card, index) => (
-        <div key={card.key} className="animate-fade-in-slide-up" style={{ animationDelay: `${(showVoiceSelector ? index + 1 : index) * 100}ms` }}>
+        <div key={card.key} className="animate-fade-in-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
             <InfoCard 
                 title={card.title} 
                 content={card.content} 

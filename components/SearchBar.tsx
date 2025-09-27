@@ -50,7 +50,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
   return (
     <form onSubmit={handleSubmit} className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-lg p-2 mb-8 border border-black/5">
       <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
-        <div className="w-full flex-grow flex items-center bg-white/40 rounded-lg p-1 gap-1">
+        <div className="w-full flex-grow">
           <input
             type="text"
             value={query}
@@ -61,47 +61,49 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full p-2.5 bg-transparent focus:outline-none text-slate-900 placeholder-slate-500"
+            className="w-full h-14 px-4 bg-white/40 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-900 placeholder-slate-500 transition-shadow text-lg"
             disabled={isLoading || isIdentifying}
           />
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            className="hidden"
-            accept="image/*"
-            capture="environment"
-          />
-          <button
-            type="button"
-            onClick={handleImageButtonClick}
-            disabled={isLoading || isIdentifying}
-            aria-label="Upload medicine image"
-            className="flex-shrink-0 relative w-10 h-10 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 text-slate-600 shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 transform hover:scale-105 active:scale-95 group flex items-center justify-center border border-slate-300/50"
-          >
-             {isIdentifying ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
-             ) : (
-                <div className="w-5 h-5 text-slate-500 group-hover:text-blue-500 transition-colors">
-                    <CameraIcon />
-                </div>
-             )}
-          </button>
         </div>
-        <button
-          type="submit"
-          disabled={isLoading || isIdentifying || !query}
-          className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold p-3 px-6 rounded-lg hover:from-blue-600 hover:to-cyan-500 transition-all duration-200 disabled:from-blue-400/50 disabled:to-cyan-400/50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none"
-        >
-          {isLoading || isIdentifying ? (
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-          ) : (
-            <>
-              <SearchIcon />
-              <span className="ml-2 hidden sm:inline">Search</span>
-            </>
-          )}
-        </button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          className="hidden"
+          accept="image/*"
+          capture="environment"
+        />
+        <div className="w-full sm:w-auto flex items-center space-x-2">
+            <button
+              type="button"
+              onClick={handleImageButtonClick}
+              disabled={isLoading || isIdentifying}
+              aria-label="Upload medicine image"
+              className="flex-grow sm:flex-grow-0 sm:w-14 h-14 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-md hover:from-blue-600 hover:to-cyan-500 transition-all duration-200 disabled:from-blue-400/50 disabled:to-cyan-400/50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 disabled:shadow-none"
+            >
+              {isIdentifying ? (
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+              ) : (
+                  <div className="w-7 h-7">
+                      <CameraIcon />
+                  </div>
+              )}
+            </button>
+            <button
+              type="submit"
+              disabled={isLoading || isIdentifying || !query}
+              className="flex-grow sm:flex-grow-0 sm:w-auto h-14 p-3 sm:px-6 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold transition-all duration-200 disabled:from-blue-400/50 disabled:to-cyan-400/50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none"
+            >
+              {isLoading || isIdentifying ? (
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+              ) : (
+                <>
+                  <div className="w-7 h-7"><SearchIcon /></div>
+                  <span className="ml-2 hidden sm:inline text-lg">Search</span>
+                </>
+              )}
+            </button>
+        </div>
       </div>
 
        <div className="mt-3 mx-2 mb-1">

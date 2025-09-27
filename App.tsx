@@ -13,7 +13,6 @@ const App: React.FC = () => {
   const [medicineResult, setMedicineResult] = useState<{info: MedicineInfo, lang: Language} | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
 
   const handleSearch = useCallback(async (query: string, imageFile: File | null, condition: string) => {
     if (!query && !imageFile) {
@@ -49,7 +48,7 @@ const App: React.FC = () => {
         <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center">
           <div className="w-full max-w-3xl">
             <p className="text-center text-slate-600 mb-6 text-base md:text-lg">
-              Your AI-powered guide for clear and simple medicine information.
+              Your trusted source for comprehensive medicine information
             </p>
             <LanguageSelector selectedLanguage={language} onSelectLanguage={setLanguage} />
             <SearchBar onSearch={handleSearch} isLoading={isLoading} />
@@ -58,8 +57,6 @@ const App: React.FC = () => {
               error={error}
               medicineInfo={medicineResult?.info ?? null}
               language={medicineResult?.lang ?? language}
-              selectedVoice={selectedVoice}
-              onSelectVoice={setSelectedVoice}
             />
           </div>
         </main>

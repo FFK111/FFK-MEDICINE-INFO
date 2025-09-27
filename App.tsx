@@ -10,7 +10,7 @@ import { Background } from './components/Background';
 
 const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>(Language.ENGLISH);
-  const [medicineInfo, setMedicineInfo] = useState<MedicineInfo | null>(null);
+  const [medicineResult, setMedicineResult] = useState<{info: MedicineInfo, lang: Language} | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,14 +22,15 @@ const App: React.FC = () => {
 
     setIsLoading(true);
     setError(null);
-    setMedicineInfo(null);
+    setMedicineResult(null);
 
     try {
-      const result = await getMedicineInfo(query, language, imageFile, condition);
+      const langForSearch = language; // Capture language at the time of search
+      const result = await getMedicineInfo(query, langForSearch, imageFile, condition);
       if (result.safetyInCondition && condition) {
           result.conditionContext = condition;
       }
-      setMedicineInfo(result);
+      setMedicineResult({ info: result, lang: langForSearch });
     } catch (err) {
       console.error(err);
       setError('An error occurred while fetching information. Please try again.');
@@ -54,8 +55,8 @@ const App: React.FC = () => {
             <ResponseDisplay
               isLoading={isLoading}
               error={error}
-              medicineInfo={medicineInfo}
-              language={language}
+              medicineInfo={medicineResult?.info ?? null}
+              language={medicineResult?.lang ?? language}
             />
           </div>
         </main>

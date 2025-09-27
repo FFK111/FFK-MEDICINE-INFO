@@ -50,7 +50,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
   return (
     <form onSubmit={handleSubmit} className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-lg p-2 mb-8 border border-black/5">
       <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
-        <div className="w-full flex-grow flex items-center bg-white/40 rounded-lg">
+        <div className="w-full flex-grow flex items-center bg-white/40 rounded-lg p-1 gap-1">
           <input
             type="text"
             value={query}
@@ -61,7 +61,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full p-3 bg-transparent focus:outline-none text-slate-900 placeholder-slate-500"
+            className="w-full p-2.5 bg-transparent focus:outline-none text-slate-900 placeholder-slate-500"
             disabled={isLoading || isIdentifying}
           />
           <input
@@ -77,9 +77,15 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
             onClick={handleImageButtonClick}
             disabled={isLoading || isIdentifying}
             aria-label="Upload medicine image"
-            className="p-3 rounded-lg text-slate-500 hover:text-blue-500 transition-all duration-200 disabled:opacity-50 transform hover:scale-110 active:scale-95"
+            className="flex-shrink-0 relative w-10 h-10 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 text-slate-600 shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 transform hover:scale-105 active:scale-95 group flex items-center justify-center border border-slate-300/50"
           >
-            <CameraIcon />
+             {isIdentifying ? (
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
+             ) : (
+                <div className="w-5 h-5 text-slate-500 group-hover:text-blue-500 transition-colors">
+                    <CameraIcon />
+                </div>
+             )}
           </button>
         </div>
         <button

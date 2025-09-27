@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { MedicineInfo, Language } from '../types';
 import { InfoCard } from './InfoCard';
 import { PillIcon } from './icons/PillIcon';
@@ -20,6 +20,7 @@ interface ResponseDisplayProps {
 export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, error, medicineInfo, language }) => {
   const { speak, cancel, isSpeaking, speakingText, voices } = useTextToSpeech();
   const spokenMedicineInfo = useRef<MedicineInfo | null>(null);
+  const [pendingSpeech, setPendingSpeech] = useState<{ text: string; lang: Language } | null>(null);
 
   const findBestVoice = useCallback((lang: Language): SpeechSynthesisVoice | null => {
     if (!voices.length) return null;
@@ -39,26 +40,35 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     return langVoices[0];
   }, [voices]);
 
+  // Effect 1: Queue speech request when new data arrives or language changes.
   useEffect(() => {
-    // Always cancel ongoing speech when new info or language is selected
-    cancel();
-
-    const bestVoice = findBestVoice(language);
+    cancel(); // Always cancel any ongoing speech from previous results.
     
-    if (
-      medicineInfo &&
-      bestVoice &&
-      spokenMedicineInfo.current !== medicineInfo
-    ) {
-      speak({ text: `Uses: ${medicineInfo.uses}`, lang: language, voice: bestVoice });
+    // Only queue speech for brand new information.
+    if (medicineInfo && spokenMedicineInfo.current !== medicineInfo) {
+      setPendingSpeech({ text: `Uses: ${medicineInfo.uses}`, lang: language });
       spokenMedicineInfo.current = medicineInfo;
     }
 
     if (!medicineInfo) {
         spokenMedicineInfo.current = null;
     }
+  }, [medicineInfo, language, cancel]);
 
-  }, [medicineInfo, language, voices, findBestVoice, speak, cancel]);
+  // Effect 2: Execute queued speech once voices are loaded and ready.
+  useEffect(() => {
+    if (pendingSpeech && voices.length > 0) {
+      const bestVoice = findBestVoice(pendingSpeech.lang);
+      if (bestVoice) {
+        speak({
+          text: pendingSpeech.text,
+          lang: pendingSpeech.lang,
+          voice: bestVoice,
+        });
+        setPendingSpeech(null); // Clear the queue once speech has started.
+      }
+    }
+  }, [pendingSpeech, voices, findBestVoice, speak]);
 
   if (isLoading) {
     return (

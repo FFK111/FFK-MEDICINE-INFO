@@ -10,9 +10,10 @@ interface InfoCardProps {
   variant?: 'default' | 'disclaimer' | 'safety';
   onToggleSpeak?: () => void;
   isSpeaking: boolean;
+  highlightForAutoplay?: boolean;
 }
 
-export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, variant = 'default', onToggleSpeak, isSpeaking }) => {
+export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, variant = 'default', onToggleSpeak, isSpeaking, highlightForAutoplay = false }) => {
   const variants = {
     default: {
       border: 'border-blue-500',
@@ -80,7 +81,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
               isSpeaking
                 ? 'bg-blue-100 text-blue-600 hover:bg-red-100 hover:text-red-700'
                 : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
-            }`}
+            } ${highlightForAutoplay ? 'animate-pulse-button-glow' : ''}`}
           >
             <div className="w-6 h-6">
               {isSpeaking ? (

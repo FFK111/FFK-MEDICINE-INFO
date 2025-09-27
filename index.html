@@ -81,6 +81,21 @@
         animation: pulse-glow-green 2s ease-in-out infinite;
       }
       
+      @keyframes pulse-button-glow {
+        0% {
+          box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+        }
+      }
+      .animate-pulse-button-glow {
+        animation: pulse-button-glow 2s infinite;
+      }
+
       @keyframes speak-wave {
         0%, 100% { transform: scaleY(0.2); }
         50% { transform: scaleY(1); }

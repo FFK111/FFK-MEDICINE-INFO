@@ -22,6 +22,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   const spokenMedicineInfo = useRef<MedicineInfo | null>(null);
   const [pendingSpeech, setPendingSpeech] = useState<{ text: string; lang: Language } | null>(null);
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [autoplayFailed, setAutoplayFailed] = useState(false);
 
   // Effect to automatically select the best available female voice
   useEffect(() => {
@@ -50,21 +51,11 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
         const getVoiceScore = (voice: SpeechSynthesisVoice): number => {
             const name = voice.name.toLowerCase();
             let score = 0;
-
-            // High-quality voices get a boost
             if (name.includes('google')) score += 10;
-
-            // Explicit gender keywords
             if (name.includes('female') || name.includes('girl') || name.includes('woman')) score += 20;
-
-            // Common female voice names
             if (['samantha', 'susan', 'zira', 'lekha', 'fiona', 'veena'].some(n => name.includes(n))) score += 5;
-            
             if (voice.default) score += 2;
-
-            // Penalize male voices
             if (name.includes('male') || name.includes('boy') || name.includes('man')) score -= 20;
-
             return score;
         };
 
@@ -77,6 +68,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   // Effect to queue the initial speech when new results arrive
   useEffect(() => {
     cancel(); 
+    setAutoplayFailed(false); // Reset on new results
     if (medicineInfo && spokenMedicineInfo.current !== medicineInfo) {
       setPendingSpeech({ text: `Uses: ${medicineInfo.uses}`, lang: language });
       spokenMedicineInfo.current = medicineInfo;
@@ -94,7 +86,19 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
         lang: pendingSpeech.lang,
         voice: selectedVoice,
       });
+
+      // Heuristic to detect if autoplay was blocked by the browser.
+      // We check if speaking has actually started after a short delay.
+      const autoplayCheckTimeout = setTimeout(() => {
+        if (!speechSynthesis.speaking) {
+            console.warn("Autoplay was likely blocked by the browser.");
+            setAutoplayFailed(true);
+        }
+      }, 200);
+
       setPendingSpeech(null);
+
+      return () => clearTimeout(autoplayCheckTimeout);
     }
   }, [pendingSpeech, selectedVoice, speak]);
 
@@ -132,6 +136,11 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   const handleToggleSpeak = (text: string, title: string) => {
     const fullText = `${title}: ${text}`;
     if (!selectedVoice) return;
+    
+    // The user has interacted, so we assume autoplay is now allowed.
+    if (autoplayFailed) {
+        setAutoplayFailed(false);
+    }
 
     if (isSpeaking && speakingText === fullText) {
       cancel();
@@ -174,6 +183,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
                 variant={card.variant}
                 onToggleSpeak={hasSpeechSupport ? () => handleToggleSpeak(card.content, card.title) : undefined}
                 isSpeaking={isSpeaking && speakingText === `${card.title}: ${card.content}`}
+                highlightForAutoplay={autoplayFailed && card.key === 'uses'}
             />
         </div>
       ))}

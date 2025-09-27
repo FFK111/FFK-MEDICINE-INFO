@@ -13,6 +13,7 @@ const App: React.FC = () => {
   const [medicineResult, setMedicineResult] = useState<{info: MedicineInfo, lang: Language} | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
 
   const handleSearch = useCallback(async (query: string, imageFile: File | null, condition: string) => {
     if (!query && !imageFile) {
@@ -57,6 +58,8 @@ const App: React.FC = () => {
               error={error}
               medicineInfo={medicineResult?.info ?? null}
               language={medicineResult?.lang ?? language}
+              selectedVoice={selectedVoice}
+              onSelectVoice={setSelectedVoice}
             />
           </div>
         </main>

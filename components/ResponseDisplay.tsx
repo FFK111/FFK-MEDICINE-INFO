@@ -27,28 +27,49 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   useEffect(() => {
     if (voices.length > 0) {
         const langVoices = voices.filter(v => v.lang.startsWith(language));
-
-        if (langVoices.length > 0) {
-            const getVoiceScore = (voice: SpeechSynthesisVoice): number => {
-                const name = voice.name.toLowerCase();
-                let score = 0;
-                // Prefer high-quality voices
-                if (name.includes('google')) score += 10;
-                // Prefer female voices
-                if (name.includes('female')) score += 8;
-                // Add points for common female voice names
-                if (['samantha', 'susan', 'zira', 'lekha', 'fiona'].some(n => name.includes(n))) score += 5;
-                if (voice.default) score += 2;
-                // Penalize male voices
-                if (name.includes('male')) score -= 10;
-                return score;
-            };
-
-            const sortedVoices = [...langVoices].sort((a, b) => getVoiceScore(b) - getVoiceScore(a));
-            setSelectedVoice(sortedVoices[0]);
-        } else {
+        if (langVoices.length === 0) {
             setSelectedVoice(null);
+            return;
         }
+
+        const priorityVoices: { [key in Language]?: string[] } = {
+            [Language.ENGLISH]: ['samantha', 'fiona', 'google us english', 'zira', 'susan'],
+            [Language.HINDI]: ['google हिन्दी', 'lekha'],
+        };
+
+        const currentPriority = priorityVoices[language] || [];
+        for (const priorityName of currentPriority) {
+            const foundVoice = langVoices.find(v => v.name.toLowerCase().includes(priorityName));
+            if (foundVoice) {
+                setSelectedVoice(foundVoice);
+                return; // Found a priority voice, we're done
+            }
+        }
+
+        // If no priority voice was found, fall back to scoring
+        const getVoiceScore = (voice: SpeechSynthesisVoice): number => {
+            const name = voice.name.toLowerCase();
+            let score = 0;
+
+            // High-quality voices get a boost
+            if (name.includes('google')) score += 10;
+
+            // Explicit gender keywords
+            if (name.includes('female') || name.includes('girl') || name.includes('woman')) score += 20;
+
+            // Common female voice names
+            if (['samantha', 'susan', 'zira', 'lekha', 'fiona', 'veena'].some(n => name.includes(n))) score += 5;
+            
+            if (voice.default) score += 2;
+
+            // Penalize male voices
+            if (name.includes('male') || name.includes('boy') || name.includes('man')) score -= 20;
+
+            return score;
+        };
+
+        const sortedVoices = [...langVoices].sort((a, b) => getVoiceScore(b) - getVoiceScore(a));
+        setSelectedVoice(sortedVoices[0] || null);
     }
   }, [language, voices]);
 

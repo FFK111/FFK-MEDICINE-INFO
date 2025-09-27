@@ -43,6 +43,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
   const theme = variants[variant];
   const isDisclaimer = variant === 'disclaimer';
   const showSpeakButton = !isDisclaimer && onToggleSpeak;
+  const contentFontSize = isDisclaimer ? 'text-sm' : 'text-lg';
 
   const glowAnimationClasses = {
     default: 'animate-pulse-glow-blue',
@@ -90,7 +91,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
           </button>
         )}
       </div>
-      <p className={`text-lg whitespace-pre-wrap ${theme.contentText}`}>
+      <p className={`${contentFontSize} whitespace-pre-wrap ${theme.contentText}`}>
         {content}
       </p>
     </div>

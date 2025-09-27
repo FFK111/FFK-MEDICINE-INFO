@@ -25,7 +25,7 @@ const medicineInfoSchema = {
     },
     disclaimer: {
         type: Type.STRING,
-        description: "The exact disclaimer text: 'This information is for educational purposes only. Please use medicine strictly as prescribed by a qualified doctor.'",
+        description: "The exact disclaimer text: 'Educational use only. Always consult a doctor before use.'",
     },
     safetyInCondition: {
         type: Type.STRING,
@@ -95,7 +95,7 @@ export async function getMedicineInfo(
 
   parts.push({ text: prompt });
 
-  const systemInstruction = `You are an AI medical guide. Your response must be structured as a JSON object adhering to the provided schema. Always include these sections: 'Composition', 'Uses', 'Major Side Effects', 'Recommended Time to Take'. The 'Disclaimer' section must contain this exact text: "This information is for educational purposes only. Please use medicine strictly as prescribed by a qualified doctor." If a specific medical condition is mentioned by the user, you must also provide information in the 'safetyInCondition' field. If responding in Hindi or Urdu, translate this disclaimer and all other content as well.`;
+  const systemInstruction = `You are an AI medical guide. Your response must be structured as a JSON object adhering to the provided schema. Always include these sections: 'Composition', 'Uses', 'Major Side Effects', 'Recommended Time to Take'. The 'Disclaimer' section must contain this exact text: "Educational use only. Always consult a doctor before use." If a specific medical condition is mentioned by the user, you must also provide information in the 'safetyInCondition' field. If responding in Hindi or Urdu, translate this disclaimer and all other content as well.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',

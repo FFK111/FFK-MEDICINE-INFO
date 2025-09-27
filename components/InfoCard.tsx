@@ -1,13 +1,17 @@
 import React from 'react';
+import { SpeakerIcon } from './icons/SpeakerIcon';
+import { StopIcon } from './icons/StopIcon';
 
 interface InfoCardProps {
   title: string;
   content: string;
   icon: React.ReactNode;
   variant?: 'default' | 'disclaimer' | 'safety';
+  onToggleSpeak?: () => void;
+  isSpeaking: boolean;
 }
 
-export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, variant = 'default' }) => {
+export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, variant = 'default', onToggleSpeak, isSpeaking }) => {
   const variants = {
     default: {
       bg: 'bg-white/60',
@@ -36,6 +40,8 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
   };
   
   const theme = variants[variant];
+  const isDisclaimer = variant === 'disclaimer';
+  const showSpeakButton = !isDisclaimer && onToggleSpeak;
 
   return (
     <div className={`rounded-2xl shadow-lg overflow-hidden p-6 border-l-4 ${theme.border} ${theme.bg} backdrop-blur-xl border-black/5`}>
@@ -45,11 +51,22 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
             {icon}
           </div>
         </div>
-        <h3 className={`flex-grow text-xl font-extrabold uppercase tracking-wider ${theme.titleText}`}>
+        <h3 className={`flex-grow text-2xl font-extrabold uppercase tracking-wider ${theme.titleText}`}>
           {title}
         </h3>
+        {showSpeakButton && (
+          <button
+            onClick={onToggleSpeak}
+            aria-label={isSpeaking ? 'Stop reading' : 'Read aloud'}
+            className={`p-2 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-100 transform hover:scale-110 active:scale-95 ${isSpeaking ? 'bg-red-200 text-red-700 hover:bg-red-300' : 'bg-slate-200 text-slate-600 hover:bg-slate-300'}`}
+          >
+            <div className="w-6 h-6">
+              {isSpeaking ? <StopIcon /> : <SpeakerIcon />}
+            </div>
+          </button>
+        )}
       </div>
-      <p className={`text-xl whitespace-pre-wrap ${theme.contentText}`}>
+      <p className={`text-2xl whitespace-pre-wrap ${theme.contentText}`}>
         {content}
       </p>
     </div>

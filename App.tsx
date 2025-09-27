@@ -55,6 +55,7 @@ const App: React.FC = () => {
               isLoading={isLoading}
               error={error}
               medicineInfo={medicineInfo}
+              language={language}
             />
           </div>
         </main>

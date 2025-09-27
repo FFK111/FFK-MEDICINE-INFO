@@ -15,7 +15,6 @@ interface InfoCardProps {
 export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, variant = 'default', onToggleSpeak, isSpeaking }) => {
   const variants = {
     default: {
-      bg: 'bg-white/60',
       border: 'border-blue-500',
       iconBg: 'bg-blue-100',
       iconText: 'text-blue-600',
@@ -23,7 +22,6 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       contentText: 'text-slate-700',
     },
     disclaimer: {
-      bg: 'bg-white/60',
       border: 'border-yellow-500',
       iconBg: 'bg-yellow-100',
       iconText: 'text-yellow-600',
@@ -31,7 +29,6 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       contentText: 'text-slate-700',
     },
     safety: {
-      bg: 'bg-white/60',
       border: 'border-green-500',
       iconBg: 'bg-green-100',
       iconText: 'text-green-600',
@@ -54,7 +51,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
   const speakingAnimation = isSpeaking ? glowAnimationClasses[variant] : '';
 
   return (
-    <div className={`rounded-2xl shadow-lg overflow-hidden p-6 border-l-4 ${theme.border} ${theme.bg} backdrop-blur-xl border-black/5 ${speakingAnimation}`}>
+    <div className={`rounded-2xl shadow-lg overflow-hidden p-6 border-l-4 ${theme.border} bg-white/40 backdrop-blur-2xl border border-white/30 transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl ${speakingAnimation}`}>
       <div className="flex items-center space-x-4 mb-4">
         <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${theme.iconBg}`}>
           <div className={`${theme.iconText} w-5 h-5`}>

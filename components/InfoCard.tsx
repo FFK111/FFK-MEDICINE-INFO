@@ -55,7 +55,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
 
   return (
     <div className={`
-      rounded-2xl p-6 shadow-xl
+      rounded-2xl p-6 shadow-2xl
       bg-black/10 backdrop-blur-lg
       border border-white/20
       border-t-4 ${theme.border}

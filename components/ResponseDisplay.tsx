@@ -103,7 +103,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     return (
       <div className="space-y-4">
         {[...Array(5)].map((_, index) => (
-          <div key={index} className="animate-fade-in-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
+          <div key={index} className="animate-card-entry" style={{ animationDelay: `${index * 100}ms` }}>
             <SkeletonCard />
           </div>
         ))}
@@ -113,7 +113,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
 
   if (error) {
     return (
-      <div className="text-center p-8 bg-red-100/80 backdrop-blur-lg border border-red-300 text-red-800 rounded-2xl shadow-lg animate-fade-in-slide-up">
+      <div className="text-center p-8 bg-red-100/80 backdrop-blur-lg border border-red-300 text-red-800 rounded-2xl shadow-lg animate-card-entry">
         <h3 className="font-bold text-lg text-red-900">Error</h3>
         <p>{error}</p>
       </div>
@@ -166,7 +166,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   return (
     <div className="space-y-4">
       {cards.map((card, index) => (
-        <div key={card.key} className="animate-fade-in-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
+        <div key={card.key} className="animate-card-entry" style={{ animationDelay: `${index * 100}ms` }}>
             <InfoCard 
                 title={card.title} 
                 content={card.content} 

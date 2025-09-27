@@ -20,6 +20,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       iconText: 'text-blue-600',
       titleText: 'text-slate-900',
       contentText: 'text-slate-700',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(59,130,246,0.2)]',
     },
     disclaimer: {
       border: 'border-yellow-500',
@@ -27,6 +28,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       iconText: 'text-yellow-600',
       titleText: 'text-slate-900',
       contentText: 'text-slate-700',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(234,179,8,0.2)]',
     },
     safety: {
       border: 'border-green-500',
@@ -34,6 +36,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       iconText: 'text-green-600',
       titleText: 'text-slate-900',
       contentText: 'text-slate-700',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(34,197,94,0.2)]',
     },
   };
   
@@ -51,7 +54,15 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
   const speakingAnimation = isSpeaking ? glowAnimationClasses[variant] : '';
 
   return (
-    <div className={`rounded-2xl shadow-lg overflow-hidden p-6 border-l-4 ${theme.border} bg-white/40 backdrop-blur-2xl border border-white/30 transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-2xl ${speakingAnimation}`}>
+    <div className={`
+      rounded-2xl p-6 shadow-xl
+      bg-black/10 backdrop-blur-lg
+      border border-white/20
+      border-t-4 ${theme.border}
+      transition-all duration-300 ease-out
+      hover:scale-[1.02] hover:border-white/40 ${theme.hoverGlow}
+      ${speakingAnimation}
+    `}>
       <div className="flex items-center space-x-4 mb-4">
         <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${theme.iconBg}`}>
           <div className={`${theme.iconText} w-5 h-5`}>

@@ -19,8 +19,8 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       iconBg: 'bg-blue-100',
       iconText: 'text-blue-600',
       titleText: 'text-slate-900',
-      contentText: 'text-slate-700',
-      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(59,130,246,0.2)]',
+      contentText: 'text-slate-800 font-semibold',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(59,130,246,0.25)]',
     },
     disclaimer: {
       border: 'border-yellow-500',
@@ -28,15 +28,15 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       iconText: 'text-yellow-600',
       titleText: 'text-slate-900',
       contentText: 'text-slate-700',
-      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(234,179,8,0.2)]',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(234,179,8,0.25)]',
     },
     safety: {
       border: 'border-green-500',
       iconBg: 'bg-green-100',
       iconText: 'text-green-600',
       titleText: 'text-slate-900',
-      contentText: 'text-slate-700',
-      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(34,197,94,0.2)]',
+      contentText: 'text-slate-800 font-semibold',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(34,197,94,0.25)]',
     },
   };
   

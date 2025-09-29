@@ -48,7 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
   const currentPlaceholder = isIdentifying ? "Identifying medicine from image..." : "Enter medicine name...";
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/15 backdrop-blur-3xl rounded-2xl shadow-xl p-2 mb-8 border border-white/20">
+    <form onSubmit={handleSubmit} className="bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-xl p-2 mb-8 border border-white/10">
       <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
         <div className="w-full flex-grow">
           <input
@@ -61,7 +61,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full h-14 px-4 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow text-lg"
+            className="w-full h-14 px-4 bg-slate-800/50 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-100 placeholder-slate-400 transition-shadow text-lg"
             disabled={isLoading || isIdentifying}
           />
         </div>
@@ -79,7 +79,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
               onClick={handleImageButtonClick}
               disabled={isLoading || isIdentifying}
               aria-label="Upload medicine image"
-              className="flex-grow sm:flex-grow-0 sm:w-14 h-14 rounded-lg bg-gradient-to-r from-red-500/60 to-rose-500/60 backdrop-blur-2xl border border-white/30 text-white shadow-md hover:from-red-500/70 hover:to-rose-500/70 transition-all duration-200 disabled:from-red-500/20 disabled:to-rose-500/20 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 disabled:shadow-none"
+              className="flex-grow sm:flex-grow-0 sm:w-14 h-14 rounded-lg bg-gradient-to-r from-cyan-500/60 to-blue-500/60 backdrop-blur-xl border border-white/20 text-white shadow-md hover:from-cyan-500/70 hover:to-blue-500/70 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 disabled:shadow-none hover:shadow-[0_0_20px_theme(colors.cyan.500)]"
             >
               {isIdentifying ? (
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
@@ -92,7 +92,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
             <button
               type="submit"
               disabled={isLoading || isIdentifying || !query}
-              className="flex-grow sm:flex-grow-0 sm:w-auto h-14 p-3 sm:px-6 rounded-lg bg-gradient-to-r from-red-500/60 to-rose-500/60 backdrop-blur-2xl border border-white/30 text-white font-bold transition-all duration-200 disabled:from-red-500/20 disabled:to-rose-500/20 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none hover:from-red-500/70 hover:to-rose-500/70"
+              className="flex-grow sm:flex-grow-0 sm:w-auto h-14 p-3 sm:px-6 rounded-lg bg-gradient-to-r from-cyan-500/60 to-blue-500/60 backdrop-blur-xl border border-white/20 text-white font-bold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none hover:from-cyan-500/70 hover:to-blue-500/70 hover:shadow-[0_0_20px_theme(colors.cyan.500)]"
             >
               {isLoading || isIdentifying ? (
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
@@ -112,7 +112,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
               placeholder="Optional: Add a condition (e.g., kidney issue)"
-              className="w-full p-2 bg-white/20 border border-white/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 text-sm text-slate-800 placeholder-slate-500 transition-shadow"
+              className="w-full p-2 bg-slate-800/50 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm text-slate-200 placeholder-slate-400 transition-shadow"
               disabled={isLoading || isIdentifying}
           />
       </div>

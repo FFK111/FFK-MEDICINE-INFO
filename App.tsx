@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Language, MedicineInfo } from './types';
 import { getMedicineInfo } from './services/geminiService';
 import { Header } from './components/Header';
@@ -16,6 +16,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<AppTab>('info');
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = useCallback(async (query: string, imageFile: File | null, condition: string) => {
     if (!query && !imageFile) {
@@ -42,37 +43,54 @@ const App: React.FC = () => {
     }
   }, [language]);
 
+  useEffect(() => {
+    if (!isLoading && (medicineResult || error)) {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [isLoading, medicineResult, error]);
+
   const renderInfoTab = () => (
     <>
       <LanguageSelector selectedLanguage={language} onSelectLanguage={setLanguage} />
       <SearchBar onSearch={handleSearch} isLoading={isLoading} />
-      <ResponseDisplay
-        isLoading={isLoading}
-        error={error}
-        medicineInfo={medicineResult?.info ?? null}
-        language={medicineResult?.lang ?? language}
-      />
+      <div ref={resultsRef}>
+        <ResponseDisplay
+          isLoading={isLoading}
+          error={error}
+          medicineInfo={medicineResult?.info ?? null}
+          language={medicineResult?.lang ?? language}
+        />
+      </div>
     </>
   );
 
   return (
-    <div className="relative min-h-screen font-sans text-slate-800">
+    <div className="relative min-h-screen font-sans text-slate-200">
       <Background />
       <div className="relative z-10 flex flex-col min-h-screen animate-fade-in">
         <Header />
         <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center">
-            <p className="text-center text-slate-600 mb-6 text-base md:text-lg">
-              Your trusted source for comprehensive medicine information
+            <p className="text-center text-slate-400 mb-6 text-base md:text-lg max-w-2xl">
+              A guide for simple, easy-to-understand medicine information.
             </p>
             <TabSelector activeTab={activeTab} onTabChange={setActiveTab} />
             
-            {activeTab === 'info' && (
-              <div className="w-full max-w-3xl">
+            <div className="grid w-full max-w-3xl">
+              <div
+                className={`[grid-area:1/1] transition-opacity duration-400 ease-out ${
+                  activeTab === 'info' ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+              >
                 {renderInfoTab()}
               </div>
-            )}
-            
-            {activeTab === 'dosage' && <DosageCalculator />}
+              <div
+                className={`[grid-area:1/1] transition-opacity duration-400 ease-out ${
+                  activeTab === 'dosage' ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+              >
+                <DosageCalculator />
+              </div>
+            </div>
         </main>
         <Footer />
       </div>

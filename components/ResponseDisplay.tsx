@@ -119,8 +119,8 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
 
   if (error) {
     return (
-      <div className="text-center p-8 bg-red-500/10 backdrop-blur-3xl border border-red-500/30 text-red-800 rounded-2xl shadow-lg animate-card-entry">
-        <h3 className="font-bold text-lg text-red-900">Error</h3>
+      <div className="text-center p-8 bg-red-900/40 backdrop-blur-xl border border-red-500/50 text-red-200 rounded-2xl shadow-lg animate-card-entry">
+        <h3 className="font-bold text-lg text-red-100">Error</h3>
         <p>{error}</p>
       </div>
     );
@@ -128,8 +128,8 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
 
   if (!medicineInfo) {
     return (
-      <div className="text-center p-8 bg-white/15 backdrop-blur-3xl border border-white/20 text-slate-700 rounded-2xl shadow-lg">
-        <h3 className="font-semibold text-lg text-slate-800">Welcome!</h3>
+      <div className="text-center p-8 bg-slate-800/40 backdrop-blur-xl border border-white/10 text-slate-300 rounded-2xl shadow-lg">
+        <h3 className="font-semibold text-lg text-slate-100">Welcome!</h3>
         <p>Enter a medicine name or upload a photo to get started.</p>
       </div>
     );
@@ -153,18 +153,20 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   
   const hasSpeechSupport = !!selectedVoice;
 
+  const safetyCard = medicineInfo.safetyInCondition && medicineInfo.conditionContext ? [{
+      title: `Safety in ${medicineInfo.conditionContext}`,
+      content: medicineInfo.safetyInCondition,
+      icon: <SafetyIcon />,
+      key: "safety",
+      variant: 'safety' as const,
+  }] : [];
+
   const cards = [
       { title: "Uses", content: medicineInfo.uses, icon: <UsesIcon />, key: "uses", variant: 'default' as const },
+      ...safetyCard,
       { title: "Composition", content: medicineInfo.composition, icon: <PillIcon />, key: "composition", variant: 'default' as const },
       { title: "Major Side Effects", content: medicineInfo.sideEffects, icon: <WarningIcon />, key: "sideEffects", variant: 'default' as const },
       { title: "Recommended Time to Take", content: medicineInfo.timeToTake, icon: <ClockIcon />, key: "timeToTake", variant: 'default' as const },
-      ...(medicineInfo.safetyInCondition && medicineInfo.conditionContext ? [{
-          title: `Safety in ${medicineInfo.conditionContext}`,
-          content: medicineInfo.safetyInCondition,
-          icon: <SafetyIcon />,
-          key: "safety",
-          variant: 'safety' as const,
-      }] : []),
       {
           title: "Disclaimer",
           content: medicineInfo.disclaimer,
@@ -178,10 +180,10 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     <div className="space-y-4">
       {autoplayFailed && (
         <div 
-          className="bg-yellow-500/10 backdrop-blur-3xl border-2 border-yellow-500/30 text-yellow-800 text-center p-4 rounded-2xl shadow-lg animate-fade-in"
+          className="bg-amber-900/40 backdrop-blur-xl border-2 border-amber-500/50 text-amber-200 text-center p-4 rounded-2xl shadow-lg animate-fade-in"
           role="alert"
         >
-          <p className="font-bold text-base text-yellow-900">Audio Paused by Browser</p>
+          <p className="font-bold text-base text-amber-100">Audio Paused by Browser</p>
           <p className="text-sm mt-1">
             Please tap the pulsing speaker icon on the "Uses" card below to begin playback.
           </p>

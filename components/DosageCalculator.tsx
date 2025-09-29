@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { getDosageInfo } from '../services/geminiService';
 import { DosageInfo } from '../types';
 import { SkeletonCard } from './SkeletonCard';
@@ -16,6 +16,7 @@ export const DosageCalculator: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [result, setResult] = useState<DosageInfo | null>(null);
+    const resultsRef = useRef<HTMLDivElement>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,6 +40,12 @@ export const DosageCalculator: React.FC = () => {
         }
     };
 
+    useEffect(() => {
+        if (!isLoading && (result || error)) {
+            resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [isLoading, result, error]);
+
     const renderResult = () => {
         if (isLoading) {
             return (
@@ -50,8 +57,8 @@ export const DosageCalculator: React.FC = () => {
         }
         if (error) {
             return (
-                <div className="mt-8 text-center p-8 bg-red-500/10 backdrop-blur-3xl border border-red-500/30 text-red-800 rounded-2xl shadow-lg animate-card-entry">
-                    <h3 className="font-bold text-lg text-red-900">Error</h3>
+                <div className="mt-8 text-center p-8 bg-red-900/40 backdrop-blur-xl border border-red-500/50 text-red-200 rounded-2xl shadow-lg animate-card-entry">
+                    <h3 className="font-bold text-lg text-red-100">Error</h3>
                     <p>{error}</p>
                 </div>
             );
@@ -101,14 +108,14 @@ export const DosageCalculator: React.FC = () => {
 
     return (
         <div className="w-full max-w-3xl">
-            <form onSubmit={handleSubmit} className="bg-white/15 backdrop-blur-3xl rounded-2xl shadow-xl p-4 mb-8 border border-white/20 animate-fade-in">
+            <form onSubmit={handleSubmit} className="bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-xl p-4 mb-8 border border-white/10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <input
                         type="text"
                         value={medicine}
                         onChange={e => setMedicine(e.target.value)}
                         placeholder="Medicine Name"
-                        className="h-12 px-4 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow"
+                        className="h-12 px-4 bg-slate-800/50 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-100 placeholder-slate-400 transition-shadow"
                         disabled={isLoading}
                     />
                     <input
@@ -116,7 +123,7 @@ export const DosageCalculator: React.FC = () => {
                         value={age}
                         onChange={e => setAge(e.target.value)}
                         placeholder="Age (years)"
-                        className="h-12 px-4 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow"
+                        className="h-12 px-4 bg-slate-800/50 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-100 placeholder-slate-400 transition-shadow"
                         disabled={isLoading}
                         min="0"
                     />
@@ -125,7 +132,7 @@ export const DosageCalculator: React.FC = () => {
                         value={weight}
                         onChange={e => setWeight(e.target.value)}
                         placeholder="Weight (kg)"
-                        className="h-12 px-4 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow"
+                        className="h-12 px-4 bg-slate-800/50 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-100 placeholder-slate-400 transition-shadow"
                         disabled={isLoading}
                         min="0"
                     />
@@ -133,7 +140,7 @@ export const DosageCalculator: React.FC = () => {
                 <button
                     type="submit"
                     disabled={isLoading || !medicine || !age || !weight}
-                    className="mt-4 w-full h-14 p-3 rounded-lg bg-gradient-to-r from-red-500/60 to-rose-500/60 backdrop-blur-2xl border border-white/30 text-white font-bold transition-all duration-200 disabled:from-red-500/20 disabled:to-rose-500/20 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none hover:from-red-500/70 hover:to-rose-500/70"
+                    className="mt-4 w-full h-14 p-3 rounded-lg bg-gradient-to-r from-cyan-500/60 to-blue-500/60 backdrop-blur-xl border border-white/20 text-white font-bold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none hover:from-cyan-500/70 hover:to-blue-500/70 hover:shadow-[0_0_20px_theme(colors.cyan.500)]"
                 >
                     {isLoading ? (
                         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
@@ -145,7 +152,9 @@ export const DosageCalculator: React.FC = () => {
                     )}
                 </button>
             </form>
-            {renderResult()}
+            <div ref={resultsRef}>
+              {renderResult()}
+            </div>
         </div>
     );
 };

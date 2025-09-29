@@ -25,7 +25,7 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
-        background-color: #f1f5f9; /* slate-100 fallback */
+        background-color: #020617; /* slate-950 fallback */
       }
       @keyframes fade-in {
         from { opacity: 0; }
@@ -57,7 +57,7 @@
         left: 0;
         width: 50%;
         height: 100%;
-        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
         transform: skewX(-25deg);
         opacity: 0;
         transition: opacity 0.4s ease-in-out;
@@ -77,43 +77,43 @@
       }
       .animate-shimmer {
         animation: shimmer 2s infinite linear;
-        background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+        background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
         background-size: 1000px 100%;
       }
 
-      @keyframes pulse-glow-red {
+      @keyframes pulse-glow-cyan {
         0%, 100% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
-        50% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 25px rgba(239, 68, 68, 0.25); }
+        50% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 35px rgba(34, 211, 238, 0.3); }
       }
-      .animate-pulse-glow-red {
-        animation: pulse-glow-red 2s ease-in-out infinite;
+      .animate-pulse-glow-cyan {
+        animation: pulse-glow-cyan 2s ease-in-out infinite;
       }
       
-      @keyframes pulse-glow-yellow {
+      @keyframes pulse-glow-amber {
         0%, 100% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
-        50% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 25px rgba(234, 179, 8, 0.25); }
+        50% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 35px rgba(245, 158, 11, 0.3); }
       }
-      .animate-pulse-glow-yellow {
-        animation: pulse-glow-yellow 2s ease-in-out infinite;
+      .animate-pulse-glow-amber {
+        animation: pulse-glow-amber 2s ease-in-out infinite;
       }
 
-      @keyframes pulse-glow-green {
+      @keyframes pulse-glow-emerald {
         0%, 100% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
-        50% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 25px rgba(34, 197, 94, 0.25); }
+        50% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 35px rgba(16, 185, 129, 0.3); }
       }
-      .animate-pulse-glow-green {
-        animation: pulse-glow-green 2s ease-in-out infinite;
+      .animate-pulse-glow-emerald {
+        animation: pulse-glow-emerald 2s ease-in-out infinite;
       }
       
       @keyframes pulse-button-glow {
         0% {
-          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+          box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7);
         }
         70% {
-          box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+          box-shadow: 0 0 0 10px rgba(34, 211, 238, 0);
         }
         100% {
-          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+          box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
         }
       }
       .animate-pulse-button-glow {
@@ -125,17 +125,34 @@
         50% { transform: scaleY(1); }
       }
       
-      @keyframes float-subtle {
-        0% { transform: translateY(0px) translateX(0px); }
-        50% { transform: translateY(-20px) translateX(10px); }
-        100% { transform: translateY(0px) translateX(0px); }
+      /* VIBRANT Colorful Space Nebula Wallpaper */
+      @keyframes pan-background-vibrant {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
-      
-      @keyframes float-subtle-reverse {
-        0% { transform: translateY(0px) translateX(0px); }
-        50% { transform: translateY(20px) translateX(-15px); }
-        100% { transform: translateY(0px) translateX(0px); }
+
+      .vibrant-space-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-size: 200% 200%;
+        animation: pan-background-vibrant 180s ease-in-out infinite;
+        background-image:
+          /* Stars with higher opacity */
+          radial-gradient(ellipse at 10% 20%, rgba(255,255,255,0.7) 0%, transparent 1.5%),
+          radial-gradient(ellipse at 80% 30%, rgba(255,255,255,0.8) 0%, transparent 2%),
+          radial-gradient(ellipse at 40% 70%, rgba(255,255,255,0.6) 0%, transparent 1.5%),
+          radial-gradient(ellipse at 90% 85%, rgba(255,255,255,0.7) 0%, transparent 2%),
+          /* Nebula clouds with higher opacity */
+          radial-gradient(ellipse at 20% 80%, rgba(192, 132, 252, 0.6) 0%, transparent 50%), /* Purple */
+          radial-gradient(ellipse at 70% 20%, rgba(34, 211, 238, 0.7) 0%, transparent 60%),  /* Cyan */
+          radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.5) 0%, transparent 70%),  /* Pink */
+          radial-gradient(ellipse at 90% 60%, rgba(96, 165, 250, 0.6) 0%, transparent 60%),  /* Blue */
+          linear-gradient(135deg, #020617 0%, #0f172a 50%, #111827 100%); /* Base dark sky */
       }
+
     </style>
   </head>
   <body>

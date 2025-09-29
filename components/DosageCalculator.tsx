@@ -133,7 +133,7 @@ export const DosageCalculator: React.FC = () => {
                 <button
                     type="submit"
                     disabled={isLoading || !medicine || !age || !weight}
-                    className="mt-4 w-full h-14 p-3 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 text-white font-bold transition-all duration-200 disabled:from-red-500/50 disabled:to-rose-500/50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none"
+                    className="mt-4 w-full h-14 p-3 rounded-lg bg-gradient-to-r from-red-500/50 to-rose-500/50 backdrop-blur-xl border border-white/20 text-white font-bold transition-all duration-200 disabled:from-red-500/20 disabled:to-rose-500/20 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none"
                 >
                     {isLoading ? (
                         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>

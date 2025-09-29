@@ -19,10 +19,10 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ selectedLang
         <button
           key={lang.id}
           onClick={() => onSelectLanguage(lang.id)}
-          className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:ring-offset-slate-100 transform hover:scale-105 active:scale-95 ${
+          className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:ring-offset-slate-100 transform hover:scale-105 active:scale-95 border ${
             selectedLanguage === lang.id
-              ? 'bg-red-500 text-white shadow-lg'
-              : 'bg-white/70 text-slate-700 hover:bg-slate-200/70 shadow-sm'
+              ? 'bg-red-500/50 backdrop-blur-xl text-white shadow-lg border-white/30'
+              : 'bg-white/25 backdrop-blur-xl text-slate-800 hover:bg-white/40 shadow-sm border-white/20'
           }`}
         >
           {lang.name}

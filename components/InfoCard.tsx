@@ -77,10 +77,10 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
           <button
             onClick={onToggleSpeak}
             aria-label={isSpeaking ? 'Stop reading' : 'Read aloud'}
-            className={`group p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:ring-offset-white transform hover:scale-110 active:scale-95 ${
+            className={`group p-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:ring-offset-white transform hover:scale-110 active:scale-95 border ${
               isSpeaking
-                ? 'bg-red-200 text-red-700 hover:bg-red-300'
-                : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
+                ? 'bg-red-500/40 backdrop-blur-xl border-white/20 text-white'
+                : 'bg-white/25 backdrop-blur-xl border-white/20 text-slate-800 hover:bg-white/30'
             } ${highlightForAutoplay ? 'animate-pulse-button-glow' : ''}`}
           >
             <div className="w-6 h-6">

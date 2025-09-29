@@ -79,7 +79,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
               onClick={handleImageButtonClick}
               disabled={isLoading || isIdentifying}
               aria-label="Upload medicine image"
-              className="flex-grow sm:flex-grow-0 sm:w-14 h-14 rounded-lg bg-gradient-to-r from-red-500/50 to-rose-500/50 backdrop-blur-xl border border-white/20 text-white shadow-md hover:from-red-500/60 hover:to-rose-500/60 transition-all duration-200 disabled:from-red-500/20 disabled:to-rose-500/20 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 disabled:shadow-none"
+              className="flex-grow sm:flex-grow-0 sm:w-14 h-14 rounded-lg bg-gradient-to-r from-red-500/60 to-rose-500/60 backdrop-blur-2xl border border-white/30 text-white shadow-md hover:from-red-500/70 hover:to-rose-500/70 transition-all duration-200 disabled:from-red-500/20 disabled:to-rose-500/20 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 disabled:shadow-none"
             >
               {isIdentifying ? (
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
@@ -92,7 +92,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
             <button
               type="submit"
               disabled={isLoading || isIdentifying || !query}
-              className="flex-grow sm:flex-grow-0 sm:w-auto h-14 p-3 sm:px-6 rounded-lg bg-gradient-to-r from-red-500/50 to-rose-500/50 backdrop-blur-xl border border-white/20 text-white font-bold transition-all duration-200 disabled:from-red-500/20 disabled:to-rose-500/20 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none"
+              className="flex-grow sm:flex-grow-0 sm:w-auto h-14 p-3 sm:px-6 rounded-lg bg-gradient-to-r from-red-500/60 to-rose-500/60 backdrop-blur-2xl border border-white/30 text-white font-bold transition-all duration-200 disabled:from-red-500/20 disabled:to-rose-500/20 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none hover:from-red-500/70 hover:to-rose-500/70"
             >
               {isLoading || isIdentifying ? (
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>

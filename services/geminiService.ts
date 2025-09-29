@@ -13,7 +13,7 @@ const medicineInfoSchema = {
     },
     uses: {
       type: Type.STRING,
-      description: "The common medical uses and conditions the medicine treats.",
+      description: "The common medical uses and conditions the medicine treats. IMPORTANT: Explain this in very simple, easy-to-understand language suitable for a layperson. Avoid all complex medical terminology. For example, instead of 'analgesic and antipyretic', say 'it is used to relieve pain and reduce fever'.",
     },
     sideEffects: {
       type: Type.STRING,

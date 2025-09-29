@@ -21,7 +21,7 @@ export const TabSelector: React.FC<TabSelectorProps> = ({ activeTab, onTabChange
                 <button
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
-                    className={`w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 focus:ring-offset-slate-950 border hover:shadow-[0_0_15px_rgba(34,211,238,0.4)] ${
+                    className={`w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-lg font-bold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 focus:ring-offset-slate-950 border hover:shadow-[0_0_15px_rgba(34,211,238,0.4)] whitespace-nowrap text-xs sm:text-sm ${
                         activeTab === tab.id
                             ? 'bg-cyan-600/70 backdrop-blur-xl text-white shadow-md border-white/20'
                             : 'bg-slate-800/40 backdrop-blur-xl text-slate-200 hover:bg-slate-700/50 border-white/10'

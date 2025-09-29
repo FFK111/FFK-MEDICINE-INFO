@@ -180,7 +180,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     <div className="space-y-4">
       {autoplayFailed && (
         <div 
-          className="bg-amber-900/40 backdrop-blur-xl border-2 border-amber-500/50 text-amber-200 text-center p-4 rounded-2xl shadow-lg animate-fade-in animate-pulse-glow-amber flex flex-col items-center"
+          className="bg-amber-900/40 backdrop-blur-xl border-2 border-amber-500/50 text-amber-200 text-center p-4 rounded-2xl shadow-lg animate-fade-in animate-pulse flex flex-col items-center"
           role="alert"
         >
           <div className="flex items-center gap-2">

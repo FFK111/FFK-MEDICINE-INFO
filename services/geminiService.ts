@@ -13,7 +13,7 @@ const medicineInfoSchema = {
     },
     uses: {
       type: Type.STRING,
-      description: "The common medical uses and conditions the medicine treats. IMPORTANT: Explain this in very simple, easy-to-understand language suitable for a layperson. Avoid all complex medical terminology. For example, instead of 'analgesic and antipyretic', say 'it is used to relieve pain and reduce fever'.",
+      description: "The common medical uses and conditions the medicine treats. CRITICAL: This explanation MUST be in simple, everyday language that a person with absolutely no medical knowledge can easily understand. DO NOT use any medical jargon or complex terms. For example, instead of 'analgesic', say 'pain reliever'. Instead of 'antipyretic', say 'reduces fever'.",
     },
     sideEffects: {
       type: Type.STRING,
@@ -150,7 +150,7 @@ export async function getDosageInfo(
   const systemInstruction = `You are an AI medical assistant providing dosage estimations. Your response must be structured as a JSON object adhering to the provided schema. Prioritize safety above all. The 'disclaimer' field must contain the exact, verbatim text provided in the schema. Do not invent dosages; if standard guidelines are not available for the specific query, explicitly state that the information cannot be provided and a doctor must be consulted.`;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gem-2.5-flash',
     contents: { parts: [{ text: prompt }] },
     config: {
         systemInstruction,

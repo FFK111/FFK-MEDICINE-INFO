@@ -50,7 +50,7 @@ export const DosageCalculator: React.FC = () => {
         }
         if (error) {
             return (
-                <div className="mt-8 text-center p-8 bg-red-100/80 backdrop-blur-lg border border-red-300 text-red-800 rounded-2xl shadow-lg animate-card-entry">
+                <div className="mt-8 text-center p-8 bg-red-500/10 backdrop-blur-3xl border border-red-500/30 text-red-800 rounded-2xl shadow-lg animate-card-entry">
                     <h3 className="font-bold text-lg text-red-900">Error</h3>
                     <p>{error}</p>
                 </div>
@@ -101,14 +101,14 @@ export const DosageCalculator: React.FC = () => {
 
     return (
         <div className="w-full max-w-3xl">
-            <form onSubmit={handleSubmit} className="bg-white/60 backdrop-blur-xl rounded-2xl shadow-xl p-4 mb-8 border border-slate-300/80 animate-fade-in">
+            <form onSubmit={handleSubmit} className="bg-white/15 backdrop-blur-3xl rounded-2xl shadow-xl p-4 mb-8 border border-white/20 animate-fade-in">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <input
                         type="text"
                         value={medicine}
                         onChange={e => setMedicine(e.target.value)}
                         placeholder="Medicine Name"
-                        className="h-12 px-4 bg-white/50 border border-slate-400/80 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow"
+                        className="h-12 px-4 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow"
                         disabled={isLoading}
                     />
                     <input
@@ -116,7 +116,7 @@ export const DosageCalculator: React.FC = () => {
                         value={age}
                         onChange={e => setAge(e.target.value)}
                         placeholder="Age (years)"
-                        className="h-12 px-4 bg-white/50 border border-slate-400/80 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow"
+                        className="h-12 px-4 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow"
                         disabled={isLoading}
                         min="0"
                     />
@@ -125,7 +125,7 @@ export const DosageCalculator: React.FC = () => {
                         value={weight}
                         onChange={e => setWeight(e.target.value)}
                         placeholder="Weight (kg)"
-                        className="h-12 px-4 bg-white/50 border border-slate-400/80 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow"
+                        className="h-12 px-4 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow"
                         disabled={isLoading}
                         min="0"
                     />

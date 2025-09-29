@@ -21,7 +21,6 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       iconText: 'text-red-600',
       titleText: 'text-slate-900',
       contentText: 'text-slate-700 font-semibold',
-      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(239,68,68,0.15)]',
     },
     disclaimer: {
       border: 'border-yellow-500',
@@ -29,7 +28,6 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       iconText: 'text-yellow-600',
       titleText: 'text-slate-900',
       contentText: 'text-slate-600',
-      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(234,179,8,0.15)]',
     },
     safety: {
       border: 'border-green-500',
@@ -37,7 +35,6 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
       iconText: 'text-green-600',
       titleText: 'text-slate-900',
       contentText: 'text-slate-700 font-semibold',
-      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(34,197,94,0.15)]',
     },
   };
   
@@ -56,14 +53,17 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
 
   return (
     <div className={`
+      group relative overflow-hidden
       rounded-2xl p-6 shadow-xl
-      bg-white/70 backdrop-blur-xl
-      border border-slate-300/80
+      bg-white/15 backdrop-blur-3xl
+      border border-white/20
       border-t-4 ${theme.border}
-      transition-all duration-300 ease-out
-      hover:scale-[1.02] ${theme.hoverGlow}
+      transition-all duration-500 ease-out
+      transform
+      hover:[transform:rotateX(7deg)_scale(1.03)] hover:shadow-2xl
       ${speakingAnimation}
     `}>
+      <div className="card-glare"></div>
       <div className="flex items-center space-x-4 mb-4">
         <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${theme.iconBg}`}>
           <div className={`${theme.iconText} w-5 h-5`}>

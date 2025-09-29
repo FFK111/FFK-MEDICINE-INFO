@@ -48,7 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
   const currentPlaceholder = isIdentifying ? "Identifying medicine from image..." : "Enter medicine name...";
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/60 backdrop-blur-xl rounded-2xl shadow-xl p-2 mb-8 border border-slate-300/80">
+    <form onSubmit={handleSubmit} className="bg-white/15 backdrop-blur-3xl rounded-2xl shadow-xl p-2 mb-8 border border-white/20">
       <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
         <div className="w-full flex-grow">
           <input
@@ -61,7 +61,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full h-14 px-4 bg-white/50 border border-slate-400/80 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow text-lg"
+            className="w-full h-14 px-4 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow text-lg"
             disabled={isLoading || isIdentifying}
           />
         </div>
@@ -112,7 +112,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
               placeholder="Optional: Add a condition (e.g., kidney issue)"
-              className="w-full p-2 bg-white/50 border border-slate-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 text-sm text-slate-800 placeholder-slate-500 transition-shadow"
+              className="w-full p-2 bg-white/20 border border-white/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 text-sm text-slate-800 placeholder-slate-500 transition-shadow"
               disabled={isLoading || isIdentifying}
           />
       </div>

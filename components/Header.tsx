@@ -20,7 +20,7 @@ const MedicalCrossIcon: React.FC = () => (
 
 export const Header: React.FC = () => {
   return (
-    <header className="w-full bg-white/70 backdrop-blur-lg shadow-md border-b border-black/10 py-3">
+    <header className="w-full bg-white/15 backdrop-blur-3xl shadow-md border-b border-white/20 py-3">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center space-x-3">
           <div className="w-9 h-9 text-red-500">

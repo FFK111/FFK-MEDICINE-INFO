@@ -119,7 +119,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
 
   if (error) {
     return (
-      <div className="text-center p-8 bg-red-100/80 backdrop-blur-lg border border-red-300 text-red-800 rounded-2xl shadow-lg animate-card-entry">
+      <div className="text-center p-8 bg-red-500/10 backdrop-blur-3xl border border-red-500/30 text-red-800 rounded-2xl shadow-lg animate-card-entry">
         <h3 className="font-bold text-lg text-red-900">Error</h3>
         <p>{error}</p>
       </div>
@@ -128,7 +128,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
 
   if (!medicineInfo) {
     return (
-      <div className="text-center p-8 bg-white/70 backdrop-blur-xl border border-slate-300 text-slate-700 rounded-2xl shadow-lg">
+      <div className="text-center p-8 bg-white/15 backdrop-blur-3xl border border-white/20 text-slate-700 rounded-2xl shadow-lg">
         <h3 className="font-semibold text-lg text-slate-800">Welcome!</h3>
         <p>Enter a medicine name or upload a photo to get started.</p>
       </div>
@@ -178,7 +178,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     <div className="space-y-4">
       {autoplayFailed && (
         <div 
-          className="bg-yellow-100/80 backdrop-blur-lg border-2 border-yellow-400 text-yellow-800 text-center p-4 rounded-2xl shadow-lg animate-fade-in"
+          className="bg-yellow-500/10 backdrop-blur-3xl border-2 border-yellow-500/30 text-yellow-800 text-center p-4 rounded-2xl shadow-lg animate-fade-in"
           role="alert"
         >
           <p className="font-bold text-base text-yellow-900">Audio Paused by Browser</p>

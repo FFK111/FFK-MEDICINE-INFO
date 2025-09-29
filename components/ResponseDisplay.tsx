@@ -81,22 +81,24 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   // Effect to execute the queued speech once a voice is selected
   useEffect(() => {
     if (pendingSpeech && selectedVoice) {
+      const speechToPlay = pendingSpeech;
+      setPendingSpeech(null); // Clear state immediately to prevent re-triggering
+
       speak({
-        text: pendingSpeech.text,
-        lang: pendingSpeech.lang,
+        text: speechToPlay.text,
+        lang: speechToPlay.lang,
         voice: selectedVoice,
       });
 
       // Heuristic to detect if autoplay was blocked by the browser.
-      // We check if speaking has actually started after a short delay.
       const autoplayCheckTimeout = setTimeout(() => {
-        if (!speechSynthesis.speaking) {
+        // If nothing is speaking after a delay and results are still present,
+        // we can assume autoplay was blocked by the browser.
+        if (!speechSynthesis.speaking && spokenMedicineInfo.current) {
             console.warn("Autoplay was likely blocked by the browser.");
             setAutoplayFailed(true);
         }
-      }, 200);
-
-      setPendingSpeech(null);
+      }, 250);
 
       return () => clearTimeout(autoplayCheckTimeout);
     }
@@ -137,7 +139,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     const fullText = `${title}: ${text}`;
     if (!selectedVoice) return;
     
-    // The user has interacted, so we assume autoplay is now allowed.
+    // The user has interacted, so we can clear the autoplay failed state.
     if (autoplayFailed) {
         setAutoplayFailed(false);
     }
@@ -174,6 +176,17 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   
   return (
     <div className="space-y-4">
+      {autoplayFailed && (
+        <div 
+          className="bg-yellow-100/80 backdrop-blur-lg border-2 border-yellow-400 text-yellow-900 text-center p-4 rounded-2xl shadow-lg animate-fade-in"
+          role="alert"
+        >
+          <p className="font-bold text-base">Audio Paused by Browser</p>
+          <p className="text-sm mt-1">
+            Please tap the pulsing speaker icon on the "Uses" card below to begin playback.
+          </p>
+        </div>
+      )}
       {cards.map((card, index) => (
         <div key={card.key} className="animate-card-entry" style={{ animationDelay: `${index * 100}ms` }}>
             <InfoCard 

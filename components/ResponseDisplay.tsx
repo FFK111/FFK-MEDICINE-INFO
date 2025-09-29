@@ -98,7 +98,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
             console.warn("Autoplay was likely blocked by the browser.");
             setAutoplayFailed(true);
         }
-      }, 250);
+      }, 500); // Increased delay for more reliability
 
       return () => clearTimeout(autoplayCheckTimeout);
     }
@@ -180,12 +180,15 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     <div className="space-y-4">
       {autoplayFailed && (
         <div 
-          className="bg-amber-900/40 backdrop-blur-xl border-2 border-amber-500/50 text-amber-200 text-center p-4 rounded-2xl shadow-lg animate-fade-in"
+          className="bg-amber-900/40 backdrop-blur-xl border-2 border-amber-500/50 text-amber-200 text-center p-4 rounded-2xl shadow-lg animate-fade-in animate-pulse-glow-amber flex flex-col items-center"
           role="alert"
         >
-          <p className="font-bold text-base text-amber-100">Audio Paused by Browser</p>
-          <p className="text-sm mt-1">
-            Please tap the pulsing speaker icon on the "Uses" card below to begin playback.
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 text-amber-400"><WarningIcon /></div>
+            <p className="font-bold text-base text-amber-100">Audio Paused by Browser</p>
+          </div>
+          <p className="text-sm mt-2">
+            Tap the pulsing speaker icon on the "Uses" card to begin playback.
           </p>
         </div>
       )}

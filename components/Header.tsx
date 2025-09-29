@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
             <MedicalCrossIcon />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent tracking-tight">
-            FFK Medicine Info
+            FFK MEDICINE INFO
           </h1>
         </div>
       </div>

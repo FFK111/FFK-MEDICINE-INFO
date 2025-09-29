@@ -16,28 +16,28 @@ interface InfoCardProps {
 export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, variant = 'default', onToggleSpeak, isSpeaking, highlightForAutoplay = false }) => {
   const variants = {
     default: {
-      border: 'border-blue-500',
-      iconBg: 'bg-blue-100',
-      iconText: 'text-blue-600',
+      border: 'border-red-500',
+      iconBg: 'bg-red-100/50',
+      iconText: 'text-red-600',
       titleText: 'text-slate-900',
-      contentText: 'text-slate-800 font-semibold',
-      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(59,130,246,0.25)]',
+      contentText: 'text-slate-700 font-semibold',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(239,68,68,0.15)]',
     },
     disclaimer: {
       border: 'border-yellow-500',
-      iconBg: 'bg-yellow-100',
+      iconBg: 'bg-yellow-100/50',
       iconText: 'text-yellow-600',
       titleText: 'text-slate-900',
-      contentText: 'text-slate-700',
-      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(234,179,8,0.25)]',
+      contentText: 'text-slate-600',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(234,179,8,0.15)]',
     },
     safety: {
       border: 'border-green-500',
-      iconBg: 'bg-green-100',
+      iconBg: 'bg-green-100/50',
       iconText: 'text-green-600',
       titleText: 'text-slate-900',
-      contentText: 'text-slate-800 font-semibold',
-      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(34,197,94,0.25)]',
+      contentText: 'text-slate-700 font-semibold',
+      hoverGlow: 'hover:shadow-[0_8px_30px_rgb(34,197,94,0.15)]',
     },
   };
   
@@ -47,7 +47,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
   const contentFontSize = isDisclaimer ? 'text-sm' : 'text-lg';
 
   const glowAnimationClasses = {
-    default: 'animate-pulse-glow-blue',
+    default: 'animate-pulse-glow-red',
     safety: 'animate-pulse-glow-green',
     disclaimer: 'animate-pulse-glow-yellow',
   };
@@ -56,12 +56,12 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
 
   return (
     <div className={`
-      rounded-2xl p-6 shadow-2xl
-      bg-black/10 backdrop-blur-lg
-      border border-white/20
+      rounded-2xl p-6 shadow-xl
+      bg-white/70 backdrop-blur-xl
+      border border-slate-300/80
       border-t-4 ${theme.border}
       transition-all duration-300 ease-out
-      hover:scale-[1.02] hover:border-white/40 ${theme.hoverGlow}
+      hover:scale-[1.02] ${theme.hoverGlow}
       ${speakingAnimation}
     `}>
       <div className="flex items-center space-x-4 mb-4">
@@ -77,9 +77,9 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
           <button
             onClick={onToggleSpeak}
             aria-label={isSpeaking ? 'Stop reading' : 'Read aloud'}
-            className={`group p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-100 transform hover:scale-110 active:scale-95 ${
+            className={`group p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:ring-offset-white transform hover:scale-110 active:scale-95 ${
               isSpeaking
-                ? 'bg-blue-100 text-blue-600 hover:bg-red-100 hover:text-red-700'
+                ? 'bg-red-200 text-red-700 hover:bg-red-300'
                 : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
             } ${highlightForAutoplay ? 'animate-pulse-button-glow' : ''}`}
           >

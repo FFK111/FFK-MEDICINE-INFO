@@ -13,3 +13,10 @@ export interface MedicineInfo {
   safetyInCondition?: string;
   conditionContext?: string; // To store the user-provided condition for UI display
 }
+
+export interface DosageInfo {
+    dosageSuggestion: string;
+    reasoning: string;
+    importantNotes: string;
+    disclaimer: string;
+}

@@ -48,7 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
   const currentPlaceholder = isIdentifying ? "Identifying medicine from image..." : "Enter medicine name...";
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-lg p-2 mb-8 border border-black/5">
+    <form onSubmit={handleSubmit} className="bg-white/60 backdrop-blur-xl rounded-2xl shadow-xl p-2 mb-8 border border-slate-300/80">
       <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
         <div className="w-full flex-grow">
           <input
@@ -61,7 +61,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full h-14 px-4 bg-white/40 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-900 placeholder-slate-500 transition-shadow text-lg"
+            className="w-full h-14 px-4 bg-white/50 border border-slate-400/80 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-900 placeholder-slate-500 transition-shadow text-lg"
             disabled={isLoading || isIdentifying}
           />
         </div>
@@ -79,7 +79,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
               onClick={handleImageButtonClick}
               disabled={isLoading || isIdentifying}
               aria-label="Upload medicine image"
-              className="flex-grow sm:flex-grow-0 sm:w-14 h-14 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-md hover:from-blue-600 hover:to-cyan-500 transition-all duration-200 disabled:from-blue-400/50 disabled:to-cyan-400/50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 disabled:shadow-none"
+              className="flex-grow sm:flex-grow-0 sm:w-14 h-14 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-md hover:from-red-600 hover:to-rose-600 transition-all duration-200 disabled:from-red-500/50 disabled:to-rose-500/50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 disabled:shadow-none"
             >
               {isIdentifying ? (
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
@@ -92,7 +92,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
             <button
               type="submit"
               disabled={isLoading || isIdentifying || !query}
-              className="flex-grow sm:flex-grow-0 sm:w-auto h-14 p-3 sm:px-6 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold transition-all duration-200 disabled:from-blue-400/50 disabled:to-cyan-400/50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none"
+              className="flex-grow sm:flex-grow-0 sm:w-auto h-14 p-3 sm:px-6 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 text-white font-bold transition-all duration-200 disabled:from-red-500/50 disabled:to-rose-500/50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none"
             >
               {isLoading || isIdentifying ? (
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
@@ -112,7 +112,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
               placeholder="Optional: Add a condition (e.g., kidney issue)"
-              className="w-full p-2 bg-white/40 border border-black/10 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-slate-800 placeholder-slate-500 transition-shadow"
+              className="w-full p-2 bg-white/50 border border-slate-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 text-sm text-slate-800 placeholder-slate-500 transition-shadow"
               disabled={isLoading || isIdentifying}
           />
       </div>

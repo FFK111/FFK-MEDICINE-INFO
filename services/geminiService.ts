@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import { Language, MedicineInfo } from '../types';
+import { Language, MedicineInfo, DosageInfo } from '../types';
 import { fileToBase64 } from "../utils/fileUtils";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
@@ -33,6 +33,29 @@ const medicineInfoSchema = {
     }
   },
   required: ["composition", "uses", "sideEffects", "timeToTake", "disclaimer"],
+};
+
+const dosageInfoSchema = {
+    type: Type.OBJECT,
+    properties: {
+        dosageSuggestion: {
+            type: Type.STRING,
+            description: "The calculated dosage suggestion (e.g., '5ml every 6 hours'). If a safe dosage cannot be determined, state that clearly and advise consulting a doctor."
+        },
+        reasoning: {
+            type: Type.STRING,
+            description: "A brief, simple explanation of the standard guideline used for the calculation (e.g., 'Based on a standard of 15mg per kg of body weight for children.')."
+        },
+        importantNotes: {
+            type: Type.STRING,
+            description: "Crucial safety notes, such as the maximum daily dose or other important warnings (e.g., 'Do not exceed 4 doses in 24 hours.')."
+        },
+        disclaimer: {
+            type: Type.STRING,
+            description: "The exact disclaimer text: 'IMPORTANT: This is an AI-generated estimate and NOT a medical prescription. Dosage can vary based on individual health conditions. ALWAYS consult a qualified doctor or pharmacist before administering any medication.'"
+        }
+    },
+    required: ["dosageSuggestion", "reasoning", "importantNotes", "disclaimer"],
 };
 
 const languageMap: Record<Language, string> = {
@@ -114,5 +137,34 @@ export async function getMedicineInfo(
   } catch (e) {
     console.error("Failed to parse Gemini response as JSON:", response.text);
     throw new Error("The AI returned an invalid response format.");
+  }
+}
+
+export async function getDosageInfo(
+  medicineName: string,
+  age: number,
+  weight: number
+): Promise<DosageInfo> {
+  const prompt = `Calculate the recommended dosage for the medicine "${medicineName}" for a person who is ${age} years old and weighs ${weight} kg. Provide the information based on standard, publicly available medical guidelines. If the medicine is not appropriate for the age/weight, or if a safe dosage cannot be confidently determined, state this clearly in the dosageSuggestion field.`;
+
+  const systemInstruction = `You are an AI medical assistant providing dosage estimations. Your response must be structured as a JSON object adhering to the provided schema. Prioritize safety above all. The 'disclaimer' field must contain the exact, verbatim text provided in the schema. Do not invent dosages; if standard guidelines are not available for the specific query, explicitly state that the information cannot be provided and a doctor must be consulted.`;
+
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: { parts: [{ text: prompt }] },
+    config: {
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: dosageInfoSchema
+    }
+  });
+
+  try {
+    const jsonText = response.text.trim();
+    const parsedJson = JSON.parse(jsonText);
+    return parsedJson as DosageInfo;
+  } catch (e) {
+    console.error("Failed to parse Gemini response as JSON for dosage:", response.text);
+    throw new Error("The AI returned an invalid response format for the dosage calculation.");
   }
 }

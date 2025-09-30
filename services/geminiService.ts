@@ -150,7 +150,7 @@ export async function getDosageInfo(
   const systemInstruction = `You are an AI medical assistant providing dosage estimations. Your response must be structured as a JSON object adhering to the provided schema. Prioritize safety above all. The 'disclaimer' field must contain the exact, verbatim text provided in the schema. Do not invent dosages; if standard guidelines are not available for the specific query, explicitly state that the information cannot be provided and a doctor must be consulted.`;
 
   const response = await ai.models.generateContent({
-    model: 'gem-2.5-flash',
+    model: 'gemini-2.5-flash',
     contents: { parts: [{ text: prompt }] },
     config: {
         systemInstruction,

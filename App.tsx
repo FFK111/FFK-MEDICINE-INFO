@@ -51,9 +51,9 @@ const App: React.FC = () => {
 
   const renderInfoTab = () => (
     <>
-      <LanguageSelector selectedLanguage={language} onSelectLanguage={setLanguage} />
       <SearchBar onSearch={handleSearch} isLoading={isLoading} />
-      <div ref={resultsRef}>
+      <LanguageSelector selectedLanguage={language} onSelectLanguage={setLanguage} />
+      <div ref={resultsRef} className="mt-8">
         <ResponseDisplay
           isLoading={isLoading}
           error={error}
@@ -69,27 +69,30 @@ const App: React.FC = () => {
       <Background />
       <div className="relative z-10 flex flex-col min-h-screen animate-fade-in">
         <Header />
-        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center">
-            <p className="text-center text-slate-400 mb-6 text-base md:text-lg max-w-2xl">
-              A guide for simple, easy-to-understand medicine information.
+        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center w-full">
+            <p className="text-center text-slate-400 mb-8 text-lg md:text-xl max-w-3xl text-gradient">
+              Clarity in medicine. Your AI-powered guide for instant, easy-to-understand pharmaceutical information.
             </p>
-            <TabSelector activeTab={activeTab} onTabChange={setActiveTab} />
             
-            <div className="grid w-full max-w-3xl">
-              <div
-                className={`[grid-area:1/1] transition-opacity duration-400 ease-out ${
-                  activeTab === 'info' ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-              >
-                {renderInfoTab()}
-              </div>
-              <div
-                className={`[grid-area:1/1] transition-opacity duration-400 ease-out ${
-                  activeTab === 'dosage' ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-              >
-                <DosageCalculator />
-              </div>
+            <div className="w-full max-w-4xl bg-slate-950/50 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 glow-border">
+                <TabSelector activeTab={activeTab} onTabChange={setActiveTab} />
+                
+                <div className="mt-6 grid">
+                    <div
+                        className={`[grid-area:1/1] transition-opacity duration-500 ease-in-out ${
+                        activeTab === 'info' ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                        }`}
+                    >
+                        {renderInfoTab()}
+                    </div>
+                    <div
+                        className={`[grid-area:1/1] transition-opacity duration-500 ease-in-out ${
+                        activeTab === 'dosage' ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                        }`}
+                    >
+                        <DosageCalculator />
+                    </div>
+                </div>
             </div>
         </main>
         <Footer />

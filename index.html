@@ -20,13 +20,43 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     
     <style>
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #020617; /* slate-950 fallback */
+      :root {
+        --slate-950: #020617;
+        --slate-900: #0f172a;
+        --slate-800: #1e293b;
+        --slate-700: #334155;
+
+        --brand-electric-blue: #00BFFF;
+        --brand-magenta: #FF00FF;
+        
+        --glow-color-blue: rgba(0, 191, 255, 0.4);
+        --glow-color-magenta: rgba(255, 0, 255, 0.3);
+        
+        --glow-color-amber: rgba(245, 158, 11, 0.35);
+        --glow-color-emerald: rgba(16, 185, 129, 0.35);
       }
+
+      body {
+        font-family: 'Manrope', sans-serif;
+        background-color: var(--slate-950);
+        background-image: radial-gradient(circle at top, var(--slate-900) 0%, var(--slate-950) 70%);
+      }
+
+      .font-orbitron {
+        font-family: 'Orbitron', sans-serif;
+      }
+      
+      .text-gradient {
+        background-image: linear-gradient(90deg, var(--brand-electric-blue), var(--brand-magenta));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+      }
+
       @keyframes fade-in {
         from { opacity: 0; }
         to { opacity: 1; }
@@ -34,41 +64,20 @@
       .animate-fade-in {
         animation: fade-in 0.5s ease-out forwards;
       }
+
       @keyframes card-entry {
         from {
           opacity: 0;
-          transform: translateY(40px) rotateX(-10deg) scale(0.95);
+          transform: translateY(20px) scale(0.98);
         }
         to {
           opacity: 1;
-          transform: translateY(0) rotateX(0deg) scale(1);
+          transform: translateY(0) scale(1);
         }
       }
       .animate-card-entry {
-        animation: card-entry 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        animation: card-entry 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         opacity: 0;
-        perspective: 1000px;
-      }
-      
-      /* Card Glare Effect */
-      .card-glare {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 50%;
-        height: 100%;
-        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
-        transform: skewX(-25deg);
-        opacity: 0;
-        transition: opacity 0.4s ease-in-out;
-      }
-      .group:hover .card-glare {
-        animation: glare-sweep 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-        opacity: 1;
-      }
-      @keyframes glare-sweep {
-        0% { transform: translateX(-100%) skewX(-25deg); }
-        100% { transform: translateX(250%) skewX(-25deg); }
       }
       
       @keyframes shimmer {
@@ -81,40 +90,43 @@
         background-size: 1000px 100%;
       }
 
-      @keyframes pulse-glow-cyan {
-        0%, 100% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
-        50% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 35px rgba(34, 211, 238, 0.3); }
+      .glow-border {
+        position: relative;
+        overflow: hidden;
       }
-      .animate-pulse-glow-cyan {
-        animation: pulse-glow-cyan 2s ease-in-out infinite;
+      .glow-border::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit; 
+        padding: 2px;
+        background: linear-gradient(135deg, var(--brand-electric-blue), var(--brand-magenta));
+        -webkit-mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        opacity: 0.5;
+        transition: opacity 0.3s ease-in-out;
+      }
+      .glow-border:hover::before {
+        opacity: 1;
       }
       
-      @keyframes pulse-glow-amber {
-        0%, 100% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
-        50% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 35px rgba(245, 158, 11, 0.3); }
+      @keyframes pulse-glow-multi {
+        0%, 100% { box-shadow: 0 4px 15px -1px rgba(0,0,0,0.3); }
+        50% { box-shadow: 0 4px 15px -1px rgba(0,0,0,0.3), 0 0 30px var(--glow-color-blue), 0 0 15px var(--glow-color-magenta) inset; }
       }
-      .animate-pulse-glow-amber {
-        animation: pulse-glow-amber 2s ease-in-out infinite;
-      }
+      .animate-pulse-glow-multi { animation: pulse-glow-multi 2s ease-in-out infinite; }
 
-      @keyframes pulse-glow-emerald {
-        0%, 100% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
-        50% { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1), 0 0 35px rgba(16, 185, 129, 0.3); }
-      }
-      .animate-pulse-glow-emerald {
-        animation: pulse-glow-emerald 2s ease-in-out infinite;
-      }
-      
       @keyframes pulse-button-glow {
-        0% {
-          box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7);
-        }
-        70% {
-          box-shadow: 0 0 0 10px rgba(34, 211, 238, 0);
-        }
-        100% {
-          box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
-        }
+        0% { box-shadow: 0 0 0 0 var(--glow-color-blue); }
+        70% { box-shadow: 0 0 0 10px rgba(0, 191, 255, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(0, 191, 255, 0); }
       }
       .animate-pulse-button-glow {
         animation: pulse-button-glow 2s infinite;

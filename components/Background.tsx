@@ -16,7 +16,10 @@ export const Background: React.FC = () => {
 
     let animationFrameId: number;
     let particles: Particle[] = [];
-    const particleColor = 'rgba(34, 211, 238, 0.7)'; // Cyan-500 with opacity
+    const colors = [
+        'rgba(0, 191, 255, 0.6)', // Electric Blue
+        'rgba(255, 0, 255, 0.4)', // Magenta
+    ];
 
     class Particle {
       x: number;
@@ -24,6 +27,7 @@ export const Background: React.FC = () => {
       size: number;
       speedX: number;
       speedY: number;
+      color: string;
 
       constructor(x: number, y: number, size: number, speedX: number, speedY: number) {
         this.x = x;
@@ -31,13 +35,14 @@ export const Background: React.FC = () => {
         this.size = size;
         this.speedX = speedX;
         this.speedY = speedY;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
       }
 
       draw() {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = particleColor;
+        ctx.fillStyle = this.color;
         ctx.fill();
       }
 
@@ -55,13 +60,13 @@ export const Background: React.FC = () => {
 
     const init = () => {
       particles = [];
-      const numberOfParticles = (canvas.height * canvas.width) / 9000;
+      const numberOfParticles = (canvas.height * canvas.width) / 25000;
       for (let i = 0; i < numberOfParticles; i++) {
-        const size = Math.random() * 1.5 + 1;
+        const size = Math.random() * 1.5 + 0.8;
         const x = Math.random() * (window.innerWidth - size * 2) + size;
         const y = Math.random() * (window.innerHeight - size * 2) + size;
-        const speedX = (Math.random() - 0.5) * 0.3;
-        const speedY = (Math.random() - 0.5) * 0.3;
+        const speedX = (Math.random() - 0.5) * 0.15;
+        const speedY = (Math.random() - 0.5) * 0.15;
         particles.push(new Particle(x, y, size, speedX, speedY));
       }
     };
@@ -76,9 +81,12 @@ export const Background: React.FC = () => {
             (particles[a].y - particles[b].y) * (particles[a].y - particles[b].y)
           );
 
-          if (distance < (canvas.width / 7)) {
-            opacityValue = 1 - (distance / (canvas.width/7));
-            ctx.strokeStyle = `rgba(34, 211, 238, ${opacityValue * 0.15})`;
+          if (distance < (canvas.width / 10)) {
+            opacityValue = 1 - (distance / (canvas.width / 10));
+            const gradient = ctx.createLinearGradient(particles[a].x, particles[a].y, particles[b].x, particles[b].y);
+            gradient.addColorStop(0, `rgba(0, 191, 255, ${opacityValue * 0.2})`);
+            gradient.addColorStop(1, `rgba(255, 0, 255, ${opacityValue * 0.1})`);
+            ctx.strokeStyle = gradient;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particles[a].x, particles[a].y);

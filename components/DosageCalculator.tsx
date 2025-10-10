@@ -107,15 +107,15 @@ export const DosageCalculator: React.FC = () => {
     };
 
     return (
-        <div className="w-full max-w-3xl">
-            <form onSubmit={handleSubmit} className="bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-xl p-4 mb-8 border border-white/10">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="w-full">
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <input
                         type="text"
                         value={medicine}
                         onChange={e => setMedicine(e.target.value)}
                         placeholder="Medicine Name"
-                        className="h-12 px-4 bg-slate-800/50 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-100 placeholder-slate-400 transition-shadow"
+                        className="h-12 px-4 bg-slate-800/70 border-2 border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all"
                         disabled={isLoading}
                     />
                     <input
@@ -123,7 +123,7 @@ export const DosageCalculator: React.FC = () => {
                         value={age}
                         onChange={e => setAge(e.target.value)}
                         placeholder="Age (years)"
-                        className="h-12 px-4 bg-slate-800/50 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-100 placeholder-slate-400 transition-shadow"
+                        className="h-12 px-4 bg-slate-800/70 border-2 border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all"
                         disabled={isLoading}
                         min="0"
                     />
@@ -132,7 +132,7 @@ export const DosageCalculator: React.FC = () => {
                         value={weight}
                         onChange={e => setWeight(e.target.value)}
                         placeholder="Weight (kg)"
-                        className="h-12 px-4 bg-slate-800/50 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-100 placeholder-slate-400 transition-shadow"
+                        className="h-12 px-4 bg-slate-800/70 border-2 border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all"
                         disabled={isLoading}
                         min="0"
                     />
@@ -140,7 +140,7 @@ export const DosageCalculator: React.FC = () => {
                 <button
                     type="submit"
                     disabled={isLoading || !medicine || !age || !weight}
-                    className="mt-4 w-full h-14 p-3 rounded-lg bg-gradient-to-r from-cyan-500/60 to-blue-500/60 backdrop-blur-xl border border-white/20 text-white font-bold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none hover:from-cyan-500/70 hover:to-blue-500/70 hover:shadow-[0_0_20px_theme(colors.cyan.500)]"
+                    className="w-full h-14 p-3 rounded-full bg-gradient-to-r from-[var(--brand-electric-blue)] to-[var(--brand-magenta)] text-white font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-lg shadow-[var(--glow-color-blue)]/50 hover:shadow-[var(--glow-color-blue)] disabled:shadow-none"
                 >
                     {isLoading ? (
                         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>

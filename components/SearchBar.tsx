@@ -29,7 +29,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
         onSearch(medicineName, file, condition);
       } catch (error) {
         console.error("Error identifying medicine from image:", error);
-        setQuery("Could not identify medicine. Please type it.");
+        setQuery("Could not identify. Please type it.");
       } finally {
         setIsIdentifying(false);
       }
@@ -45,13 +45,29 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
     onSearch(query, imageFile, condition);
   };
   
-  const currentPlaceholder = isIdentifying ? "Identifying medicine from image..." : "Enter medicine name...";
+  const currentPlaceholder = isIdentifying ? "Identifying from image..." : "Enter medicine name...";
 
   return (
-    <form onSubmit={handleSubmit} className="bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-xl p-2 mb-8 border border-white/10">
-      <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
-        <div className="w-full flex-grow">
-          <input
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="relative group">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-4 pr-3">
+            <button
+              type="button"
+              onClick={handleImageButtonClick}
+              disabled={isLoading || isIdentifying}
+              aria-label="Upload medicine image"
+              className="text-slate-400 hover:text-[var(--brand-electric-blue)] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isIdentifying ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[var(--brand-electric-blue)]"></div>
+              ) : (
+                  <div className="w-6 h-6">
+                      <CameraIcon />
+                  </div>
+              )}
+            </button>
+        </div>
+        <input
             type="text"
             value={query}
             onChange={(e) => {
@@ -61,61 +77,46 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full h-14 px-4 bg-slate-800/50 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-100 placeholder-slate-400 transition-shadow text-lg"
+            className="w-full h-16 pl-14 pr-40 bg-slate-800/70 border-2 border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all text-lg"
             disabled={isLoading || isIdentifying}
-          />
+        />
+        <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+            <button
+              type="submit"
+              disabled={isLoading || isIdentifying || !query}
+              className="h-14 w-36 rounded-full bg-gradient-to-r from-[var(--brand-electric-blue)] to-[var(--brand-magenta)] text-white font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-lg shadow-[var(--glow-color-blue)]/50 hover:shadow-[var(--glow-color-blue)] disabled:shadow-none"
+            >
+              {isLoading ? (
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+              ) : (
+                <>
+                  <div className="w-6 h-6"><SearchIcon /></div>
+                  <span className="ml-2 hidden sm:inline">Search</span>
+                </>
+              )}
+            </button>
         </div>
+      </div>
+      
+      <div>
         <input
+            type="text"
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+            placeholder="Optional: Check safety for a condition (e.g., pregnancy)"
+            className="w-full p-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-sm text-slate-200 placeholder-slate-500 transition-all"
+            disabled={isLoading || isIdentifying}
+        />
+      </div>
+
+      <input
           type="file"
           ref={fileInputRef}
           onChange={handleFileChange}
           className="hidden"
           accept="image/*"
           capture="environment"
-        />
-        <div className="w-full sm:w-auto flex items-center space-x-2">
-            <button
-              type="button"
-              onClick={handleImageButtonClick}
-              disabled={isLoading || isIdentifying}
-              aria-label="Upload medicine image"
-              className="flex-grow sm:flex-grow-0 sm:w-14 h-14 rounded-lg bg-gradient-to-r from-cyan-500/60 to-blue-500/60 backdrop-blur-xl border border-white/20 text-white shadow-md hover:from-cyan-500/70 hover:to-blue-500/70 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 disabled:shadow-none hover:shadow-[0_0_20px_theme(colors.cyan.500)]"
-            >
-              {isIdentifying ? (
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-              ) : (
-                  <div className="w-7 h-7">
-                      <CameraIcon />
-                  </div>
-              )}
-            </button>
-            <button
-              type="submit"
-              disabled={isLoading || isIdentifying || !query}
-              className="flex-grow sm:flex-grow-0 sm:w-auto h-14 p-3 sm:px-6 rounded-lg bg-gradient-to-r from-cyan-500/60 to-blue-500/60 backdrop-blur-xl border border-white/20 text-white font-bold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-md disabled:shadow-none hover:from-cyan-500/70 hover:to-blue-500/70 hover:shadow-[0_0_20px_theme(colors.cyan.500)]"
-            >
-              {isLoading || isIdentifying ? (
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-              ) : (
-                <>
-                  <div className="w-7 h-7"><SearchIcon /></div>
-                  <span className="ml-2 hidden sm:inline text-lg">Search</span>
-                </>
-              )}
-            </button>
-        </div>
-      </div>
-
-       <div className="mt-3 mx-2 mb-1">
-          <input
-              type="text"
-              value={condition}
-              onChange={(e) => setCondition(e.target.value)}
-              placeholder="Optional: Add a condition (e.g., kidney issue)"
-              className="w-full p-2 bg-slate-800/50 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm text-slate-200 placeholder-slate-400 transition-shadow"
-              disabled={isLoading || isIdentifying}
-          />
-      </div>
+      />
     </form>
   );
 };

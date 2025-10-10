@@ -50,23 +50,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="relative group">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-4 pr-3">
-            <button
-              type="button"
-              onClick={handleImageButtonClick}
-              disabled={isLoading || isIdentifying}
-              aria-label="Upload medicine image"
-              className="text-slate-400 hover:text-[var(--brand-electric-blue)] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isIdentifying ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[var(--brand-electric-blue)]"></div>
-              ) : (
-                  <div className="w-6 h-6">
-                      <CameraIcon />
-                  </div>
-              )}
-            </button>
-        </div>
         <input
             type="text"
             value={query}
@@ -77,10 +60,25 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full h-16 pl-14 pr-40 bg-slate-800/70 border-2 border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all text-lg"
+            className="w-full h-16 pl-6 pr-56 bg-slate-800/70 border-2 border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all text-lg"
             disabled={isLoading || isIdentifying}
         />
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+        <div className="absolute inset-y-0 right-0 flex items-center pr-2 space-x-2">
+            <button
+              type="button"
+              onClick={handleImageButtonClick}
+              disabled={isLoading || isIdentifying}
+              aria-label="Upload medicine image"
+              className="h-14 w-14 rounded-full bg-slate-800/70 border-2 border-slate-700 text-slate-400 hover:text-[var(--brand-electric-blue)] hover:border-[var(--brand-electric-blue)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)]"
+            >
+              {isIdentifying ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[var(--brand-electric-blue)]"></div>
+              ) : (
+                  <div className="w-6 h-6">
+                      <CameraIcon />
+                  </div>
+              )}
+            </button>
             <button
               type="submit"
               disabled={isLoading || isIdentifying || !query}

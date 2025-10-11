@@ -49,7 +49,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="relative group">
+      <div className="space-y-3">
         <input
             type="text"
             value={query}
@@ -60,43 +60,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full h-16 pl-6 pr-56 bg-slate-800/70 border-2 border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all text-lg"
+            className="w-full h-14 pl-6 pr-6 bg-slate-800/70 border-2 border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all text-lg"
             disabled={isLoading || isIdentifying}
         />
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2 space-x-2">
-            <button
-              type="button"
-              onClick={handleImageButtonClick}
-              disabled={isLoading || isIdentifying}
-              aria-label="Upload medicine image"
-              className="h-14 w-14 rounded-full bg-slate-800/70 border-2 border-slate-700 text-slate-400 hover:text-[var(--brand-electric-blue)] hover:border-[var(--brand-electric-blue)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)]"
-            >
-              {isIdentifying ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[var(--brand-electric-blue)]"></div>
-              ) : (
-                  <div className="w-6 h-6">
-                      <CameraIcon />
-                  </div>
-              )}
-            </button>
-            <button
-              type="submit"
-              disabled={isLoading || isIdentifying || !query}
-              className="h-14 w-36 rounded-full bg-gradient-to-r from-[var(--brand-electric-blue)] to-[var(--brand-magenta)] text-white font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-lg shadow-[var(--glow-color-blue)]/50 hover:shadow-[var(--glow-color-blue)] disabled:shadow-none"
-            >
-              {isLoading ? (
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-              ) : (
-                <>
-                  <div className="w-6 h-6"><SearchIcon /></div>
-                  <span className="ml-2 hidden sm:inline">Search</span>
-                </>
-              )}
-            </button>
-        </div>
-      </div>
-      
-      <div>
         <input
             type="text"
             value={condition}
@@ -105,6 +71,39 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
             className="w-full p-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-sm text-slate-200 placeholder-slate-500 transition-all"
             disabled={isLoading || isIdentifying}
         />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+        <button
+          type="button"
+          onClick={handleImageButtonClick}
+          disabled={isLoading || isIdentifying}
+          aria-label="Upload medicine image"
+          className="h-14 w-full rounded-full bg-slate-800/70 border-2 border-slate-700 text-slate-300 hover:text-[var(--brand-electric-blue)] hover:border-[var(--brand-electric-blue)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] font-bold"
+        >
+          {isIdentifying ? (
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[var(--brand-electric-blue)]"></div>
+          ) : (
+            <>
+              <div className="w-6 h-6"><CameraIcon /></div>
+              <span className="ml-3">Identify by Image</span>
+            </>
+          )}
+        </button>
+        <button
+          type="submit"
+          disabled={isLoading || isIdentifying || !query}
+          className="h-14 w-full rounded-full bg-gradient-to-r from-[var(--brand-electric-blue)] to-[var(--brand-magenta)] text-white font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-lg shadow-[var(--glow-color-blue)]/50 hover:shadow-[var(--glow-color-blue)] disabled:shadow-none text-lg"
+        >
+          {isLoading ? (
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+          ) : (
+            <>
+              <div className="w-6 h-6"><SearchIcon /></div>
+              <span className="ml-3">Search</span>
+            </>
+          )}
+        </button>
       </div>
 
       <input

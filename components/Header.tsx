@@ -9,8 +9,8 @@ export const Header: React.FC = () => {
           <div className="w-9 h-9">
             <LogoIcon />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gradient tracking-wider font-orbitron" style={{ textShadow: '0 0 10px rgba(0, 191, 255, 0.3)' }}>
-            FFK MEDICINE INFO
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gradient tracking-widest" style={{ textShadow: '0 0 15px var(--glow-color-blue)' }}>
+            FFK MEDSCAN PRO
           </h1>
         </div>
       </div>

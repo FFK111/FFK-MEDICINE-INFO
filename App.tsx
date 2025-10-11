@@ -70,8 +70,8 @@ const App: React.FC = () => {
       <div className="relative z-10 flex flex-col min-h-screen animate-fade-in">
         <Header />
         <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center w-full">
-            <p className="text-center text-slate-400 mb-8 text-lg md:text-xl max-w-3xl text-gradient">
-              Clarity in medicine. Your AI-powered guide for instant, easy-to-understand pharmaceutical information.
+            <p className="text-center text-slate-300 mb-8 text-lg md:text-xl max-w-3xl">
+              Clarity in medicine. Your guide for instant, easy-to-understand pharmaceutical information.
             </p>
             
             <div className="w-full max-w-4xl bg-slate-950/50 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 glow-border">

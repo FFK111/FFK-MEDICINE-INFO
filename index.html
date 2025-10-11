@@ -20,7 +20,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
       :root {
@@ -29,24 +29,20 @@
         --slate-800: #1e293b;
         --slate-700: #334155;
 
-        --brand-electric-blue: #00BFFF;
-        --brand-magenta: #FF00FF;
+        --brand-electric-blue: #38BDF8; /* Sky Blue */
+        --brand-magenta: #6366F1; /* Indigo */
         
-        --glow-color-blue: rgba(0, 191, 255, 0.4);
-        --glow-color-magenta: rgba(255, 0, 255, 0.3);
+        --glow-color-blue: rgba(56, 189, 248, 0.4);
+        --glow-color-magenta: rgba(99, 102, 241, 0.3);
         
         --glow-color-amber: rgba(245, 158, 11, 0.35);
         --glow-color-emerald: rgba(16, 185, 129, 0.35);
       }
 
       body {
-        font-family: 'Manrope', sans-serif;
+        font-family: 'Poppins', sans-serif;
         background-color: var(--slate-950);
         background-image: radial-gradient(circle at top, var(--slate-900) 0%, var(--slate-950) 70%);
-      }
-
-      .font-orbitron {
-        font-family: 'Orbitron', sans-serif;
       }
       
       .text-gradient {
@@ -125,8 +121,8 @@
 
       @keyframes pulse-button-glow {
         0% { box-shadow: 0 0 0 0 var(--glow-color-blue); }
-        70% { box-shadow: 0 0 0 10px rgba(0, 191, 255, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(0, 191, 255, 0); }
+        70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
       }
       .animate-pulse-button-glow {
         animation: pulse-button-glow 2s infinite;

@@ -70,7 +70,6 @@ export const DosageCalculator: React.FC = () => {
                         <InfoCard
                             title="Dosage Suggestion"
                             content={result.dosageSuggestion}
-                            icon={<BeakerIcon />}
                             variant="safety"
                             isSpeaking={false}
                         />
@@ -79,7 +78,6 @@ export const DosageCalculator: React.FC = () => {
                         <InfoCard
                             title="How it's Calculated"
                             content={result.reasoning}
-                            icon={<UsesIcon />}
                             isSpeaking={false}
                         />
                     </div>
@@ -87,7 +85,6 @@ export const DosageCalculator: React.FC = () => {
                         <InfoCard
                             title="Important Notes"
                             content={result.importantNotes}
-                            icon={<WarningIcon />}
                             variant="warning"
                             isSpeaking={false}
                         />
@@ -96,7 +93,6 @@ export const DosageCalculator: React.FC = () => {
                         <InfoCard
                             title="Super Important!"
                             content={result.disclaimer}
-                            icon={<ShieldIcon />}
                             variant="disclaimer"
                             isSpeaking={false}
                         />

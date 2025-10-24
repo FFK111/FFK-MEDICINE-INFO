@@ -6,14 +6,13 @@ import { SoundWaveIcon } from './icons/SoundWaveIcon';
 interface InfoCardProps {
   title: string;
   content: string;
-  icon: React.ReactNode;
   variant?: 'default' | 'disclaimer' | 'safety' | 'warning' | 'teal' | 'purple' | 'orange';
   onToggleSpeak?: () => void;
   isSpeaking: boolean;
   highlightForAutoplay?: boolean;
 }
 
-export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, variant = 'default', onToggleSpeak, isSpeaking, highlightForAutoplay = false }) => {
+export const InfoCard: React.FC<InfoCardProps> = ({ title, content, variant = 'default', onToggleSpeak, isSpeaking, highlightForAutoplay = false }) => {
 
   const variants = {
     default: {
@@ -76,10 +75,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
 
   return (
     <div className={cardClasses}>
-      <div className="flex items-center space-x-4">
-        <div className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center p-2 ${theme.iconBg} ${theme.iconText} comic-shadow-sm`}>
-          {icon}
-        </div>
+      <div className="flex items-center">
         <h3 className={`flex-grow font-heading font-bold text-lg sm:text-xl ${theme.titleText}`}>
           {title}
         </h3>
@@ -97,7 +93,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
             </button>
         )}
       </div>
-      <p className={`mt-3 pl-[56px] sm:pl-[64px] font-semibold ${theme.contentText} ${contentFontSize}`}>
+      <p className={`mt-4 font-semibold ${theme.contentText} ${contentFontSize}`}>
         {content}
       </p>
     </div>

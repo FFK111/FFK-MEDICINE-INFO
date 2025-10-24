@@ -153,22 +153,20 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   const safetyCard = medicineInfo.safetyInCondition && medicineInfo.conditionContext ? [{
       title: `Safety for ${medicineInfo.conditionContext}`,
       content: medicineInfo.safetyInCondition,
-      icon: <SafetyIcon />,
       key: "safety",
       variant: 'safety' as const,
   }] : [];
 
   const cards = [
-      { title: "It's For...", content: medicineInfo.medicineFor, icon: <TagIcon />, key: "medicineFor", variant: 'default' as const },
-      { title: "What It Does", content: medicineInfo.uses, icon: <UsesIcon />, key: "uses", variant: 'teal' as const },
+      { title: "It's For...", content: medicineInfo.medicineFor, key: "medicineFor", variant: 'purple' as const },
+      { title: "What It Does", content: medicineInfo.uses, key: "uses", variant: 'teal' as const },
       ...safetyCard,
-      { title: "Ingredients", content: medicineInfo.composition, icon: <PillIcon />, key: "composition", variant: 'purple' as const },
-      { title: "Side Effects", content: medicineInfo.sideEffects, icon: <WarningIcon />, key: "sideEffects", variant: 'warning' as const },
-      { title: "When to Take It", content: medicineInfo.timeToTake, icon: <ClockIcon />, key: "timeToTake", variant: 'orange' as const },
+      { title: "Ingredients", content: medicineInfo.composition, key: "composition", variant: 'default' as const },
+      { title: "Side Effects", content: medicineInfo.sideEffects, key: "sideEffects", variant: 'warning' as const },
+      { title: "When to Take It", content: medicineInfo.timeToTake, key: "timeToTake", variant: 'orange' as const },
       {
           title: "Heads Up!",
           content: medicineInfo.disclaimer,
-          icon: <ShieldIcon />,
           key: "disclaimer",
           variant: 'disclaimer' as const,
       },
@@ -195,9 +193,8 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
             <InfoCard 
                 title={card.title} 
                 content={card.content} 
-                icon={card.icon} 
                 variant={card.variant}
-                onToggleSpeak={card.variant !== 'disclaimer' && hasSpeechSupport ? () => handleToggleSpeak(card.content, card.title) : undefined}
+                onToggleSpeak={card.key !== 'disclaimer' && hasSpeechSupport ? () => handleToggleSpeak(card.content, card.title) : undefined}
                 isSpeaking={isSpeaking && speakingText === `${card.title}: ${card.content}`}
                 highlightForAutoplay={autoplayFailed && card.key === 'uses'}
             />

@@ -138,20 +138,14 @@
         50% { transform: scaleY(1); }
       }
 
-      @keyframes float-up-organic {
-        0% {
-          transform: translateY(100vh) rotate(0deg);
+      @keyframes fade-in-out-drift {
+        0%, 100% {
           opacity: 0;
+          transform: translate(-50%, -50%) scale(0.9);
         }
-        15% {
-          opacity: 0.4;
-        }
-        85% {
-          opacity: 0.4;
-        }
-        100% {
-          transform: translateY(-100vh) translateX(var(--x-drift, 0px)) rotate(360deg);
-          opacity: 0;
+        50% {
+          opacity: 0.3;
+          transform: translate(calc(-50% + var(--x-drift)), calc(-50% + var(--y-drift))) scale(1);
         }
       }
 

@@ -1,38 +1,40 @@
 import React from 'react';
 
-const SHAPES_COUNT = 20;
+const SHAPES_COUNT = 25; // A good number for an ambient effect
 const COLORS = ['--primary-blue', '--accent-yellow', '--accent-pink', '--accent-green', '--accent-purple', '--accent-teal', '--accent-orange'];
 const EASING_FUNCTIONS = [
   'ease-in-out',
   'ease-out',
-  'cubic-bezier(0.25, 0.1, 0.25, 1)',
-  'cubic-bezier(0.68, -0.55, 0.27, 1.55)'
+  'linear',
+  'cubic-bezier(0.25, 0.1, 0.25, 1)'
 ];
 
 const BackgroundShape: React.FC<{ index: number }> = ({ index }) => {
-  const duration = Math.random() * 25 + 20; // 20s to 45s
-  const delay = Math.random() * 0.5; // 0s to 0.5s delay for a much faster start
-  const size = Math.random() * 60 + 20; // 20px to 80px
-  const left = Math.random() * 100; // 0% to 100%
+  const duration = Math.random() * 10 + 8; // 8s to 18s, shorter for fade effect
+  const delay = Math.random() * 1; // Staggered start over 1 second, much faster
+  const size = Math.random() * 80 + 30; // 30px to 110px
+  const top = Math.random() * 100;
+  const left = Math.random() * 100;
   const color = COLORS[Math.floor(Math.random() * COLORS.length)];
   const borderRadius = Math.random() > 0.5 ? '50%' : '10%';
   const easing = EASING_FUNCTIONS[Math.floor(Math.random() * EASING_FUNCTIONS.length)];
-  const xDrift = Math.random() * 200 - 100; // -100px to +100px
+  const xDrift = Math.random() * 60 - 30; // -30px to +30px
+  const yDrift = Math.random() * 60 - 30; // -30px to +30px
 
-  // FIX: Add CSS custom property '--x-drift' to the type definition for the style object.
-  // React.CSSProperties does not include custom properties by default.
-  const style: React.CSSProperties & { '--x-drift': string } = {
+  const style: React.CSSProperties & { '--x-drift': string; '--y-drift': string } = {
     position: 'absolute',
-    bottom: `-${size + 10}px`,
+    top: `${top}vh`,
     left: `${left}vw`,
     width: `${size}px`,
     height: `${size}px`,
     backgroundColor: `var(${color})`,
     borderRadius,
-    animation: `float-up-organic ${duration}s ${easing} ${delay}s infinite`,
+    animation: `fade-in-out-drift ${duration}s ${easing} ${delay}s infinite`,
     '--x-drift': `${xDrift}px`,
+    '--y-drift': `${yDrift}px`,
     opacity: 0,
-    filter: 'blur(8px)',
+    filter: 'blur(12px)', // A bit more blur for a softer effect
+    transform: 'translate(-50%, -50%)', // Center the shape on its coordinates
   };
 
   return <span style={style}></span>;

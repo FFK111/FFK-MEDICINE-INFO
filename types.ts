@@ -5,6 +5,7 @@ export enum Language {
 }
 
 export interface MedicineInfo {
+  medicineFor: string;
   composition: string;
   uses: string;
   sideEffects: string;

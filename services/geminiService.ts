@@ -7,13 +7,17 @@ const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
 const medicineInfoSchema = {
   type: Type.OBJECT,
   properties: {
+    medicineFor: {
+      type: Type.STRING,
+      description: "A very short, simple summary of what the medicine is for, in just a few words. For example: 'headache medicine', 'fever', 'for uric acid'. This should be extremely concise and easy to understand at a glance.",
+    },
     composition: {
       type: Type.STRING,
       description: "The major active ingredient(s) of the medicine.",
     },
     uses: {
       type: Type.STRING,
-      description: "The common medical uses and conditions the medicine treats. CRITICAL: This explanation MUST be in simple, everyday language that a person with absolutely no medical knowledge can easily understand. DO NOT use any medical jargon or complex terms. For example, instead of 'analgesic', say 'pain reliever'. Instead of 'antipyretic', say 'reduces fever'.",
+      description: "The common medical uses and conditions the medicine treats. CRITICAL: This explanation MUST be in extremely simple, everyday language that a person with absolutely no medical knowledge can easily understand. Avoid all medical jargon. For example, instead of 'analgesic', say 'pain reliever'. Instead of 'antipyretic', say 'reduces fever'. Imagine explaining it to a worried friend.",
     },
     sideEffects: {
       type: Type.STRING,
@@ -32,7 +36,7 @@ const medicineInfoSchema = {
         description: "Information regarding the medicine's safety for the specified condition. This field should only be included if a condition is provided in the prompt."
     }
   },
-  required: ["composition", "uses", "sideEffects", "timeToTake", "disclaimer"],
+  required: ["medicineFor", "composition", "uses", "sideEffects", "timeToTake", "disclaimer"],
 };
 
 const dosageInfoSchema = {
@@ -64,26 +68,6 @@ const languageMap: Record<Language, string> = {
     [Language.URDU]: 'Urdu',
 };
 
-export async function getMedicineNameFromImage(imageFile: File): Promise<string> {
-  const base64Image = await fileToBase64(imageFile);
-  const imagePart = {
-    inlineData: {
-      mimeType: imageFile.type,
-      data: base64Image,
-    },
-  };
-  const textPart = {
-    text: "Identify the medicine in this image. Return only its brand name or generic name as a single, clean line of plain text. Do not add any extra formatting or explanation.",
-  };
-
-  const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
-    contents: { parts: [imagePart, textPart] },
-  });
-
-  return response.text.trim();
-}
-
 export async function getMedicineInfo(
   query: string,
   language: Language,
@@ -107,7 +91,11 @@ export async function getMedicineInfo(
         data: base64Image,
       },
     });
-    prompt += `Identify the medicine in this image (likely "${query}") and provide a professional, simple, and easy-to-understand explanation in ${langName}.`;
+    if (query) {
+        prompt += `The user has provided an image and also typed "${query}". The image is the primary source of truth. Identify the medicine in the image and provide a professional, simple, and easy-to-understand explanation in ${langName}.`;
+    } else {
+        prompt += `Identify the medicine in this image and provide a professional, simple, and easy-to-understand explanation in ${langName}.`;
+    }
   } else {
     prompt += `Provide a professional, simple, and easy-to-understand explanation for the medicine "${query}" in ${langName}.`;
   }
@@ -118,7 +106,7 @@ export async function getMedicineInfo(
 
   parts.push({ text: prompt });
 
-  const systemInstruction = `You are an AI medical guide. Your response must be structured as a JSON object adhering to the provided schema. Always include these sections: 'Composition', 'Uses', 'Major Side Effects', 'Recommended Time to Take'. The 'Disclaimer' section must contain this exact text: "Educational use only. Always consult a doctor before use." If a specific medical condition is mentioned by the user, you must also provide information in the 'safetyInCondition' field. If responding in Hindi or Urdu, translate this disclaimer and all other content as well.`;
+  const systemInstruction = `You are an AI medical guide. Your response must be structured as a JSON object adhering to the provided schema. Always include all required sections. The 'Disclaimer' section must contain this exact text: "Educational use only. Always consult a doctor before use." If a specific medical condition is mentioned by the user, you must also provide information in the 'safetyInCondition' field. If responding in Hindi or Urdu, translate this disclaimer and all other content as well.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',

@@ -70,7 +70,8 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     cancel(); 
     setAutoplayFailed(false); // Reset on new results
     if (medicineInfo && spokenMedicineInfo.current !== medicineInfo) {
-      setPendingSpeech({ text: `Uses: ${medicineInfo.uses}`, lang: language });
+      const textToSpeak = `This medicine is for ${medicineInfo.medicineFor}. Uses: ${medicineInfo.uses}`;
+      setPendingSpeech({ text: textToSpeak, lang: language });
       spokenMedicineInfo.current = medicineInfo;
     }
     if (!medicineInfo) {
@@ -162,6 +163,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   }] : [];
 
   const cards = [
+      { title: "Medicine For", content: medicineInfo.medicineFor, icon: <UsesIcon />, key: "medicineFor", variant: 'default' as const },
       { title: "Uses", content: medicineInfo.uses, icon: <UsesIcon />, key: "uses", variant: 'default' as const },
       ...safetyCard,
       { title: "Composition", content: medicineInfo.composition, icon: <PillIcon />, key: "composition", variant: 'default' as const },
@@ -189,7 +191,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
             <p className="font-bold text-base text-amber-100">Audio Paused by Browser</p>
           </div>
           <p className="text-sm mt-2">
-            Tap the pulsing speaker icon on the "Uses" card to begin playback.
+            Tap the pulsing speaker icon on the "Medicine For" card to begin playback.
           </p>
         </div>
       )}
@@ -202,7 +204,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
                 variant={card.variant}
                 onToggleSpeak={hasSpeechSupport ? () => handleToggleSpeak(card.content, card.title) : undefined}
                 isSpeaking={isSpeaking && speakingText === `${card.title}: ${card.content}`}
-                highlightForAutoplay={autoplayFailed && card.key === 'uses'}
+                highlightForAutoplay={autoplayFailed && card.key === 'medicineFor'}
             />
         </div>
       ))}

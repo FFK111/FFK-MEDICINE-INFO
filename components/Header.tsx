@@ -10,7 +10,7 @@ export const Header: React.FC = () => {
             <LogoIcon />
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient font-heading tracking-tighter">
-            FFK Medscan pro
+            FFK MEDSCAN PRO
           </h1>
         </div>
       </div>

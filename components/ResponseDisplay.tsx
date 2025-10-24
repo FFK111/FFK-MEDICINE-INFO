@@ -4,7 +4,6 @@ import { InfoCard } from './InfoCard';
 import { WarningIcon } from './icons/WarningIcon';
 import { SkeletonCard } from './SkeletonCard';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
-import { VoiceSelector } from './VoiceSelector';
 
 interface ResponseDisplayProps {
   isLoading: boolean;
@@ -144,7 +143,6 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   };
   
   const hasSpeechSupport = !!selectedVoice;
-  const langVoices = voices.filter(v => v.lang.startsWith(language));
 
   const safetyCard = medicineInfo.safetyInCondition && medicineInfo.conditionContext ? [{
       title: `Safety for ${medicineInfo.conditionContext}`,
@@ -182,17 +180,6 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
           <p className="text-sm mt-2 font-semibold">
             Tap the speaker on the 'What It Does' card to start listening!
           </p>
-        </div>
-      )}
-
-      {medicineInfo && hasSpeechSupport && langVoices.length > 1 && (
-        <div className="animate-card-entry" style={{ animationDelay: '50ms' }}>
-          <VoiceSelector
-            voices={langVoices}
-            selectedVoice={selectedVoice}
-            onSelectVoice={setSelectedVoice}
-            isDisabled={isSpeaking}
-          />
         </div>
       )}
 

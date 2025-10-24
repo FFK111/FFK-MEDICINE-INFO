@@ -84,10 +84,11 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   useEffect(() => {
     if (pendingSpeech && selectedVoice) {
       const speechToPlay = pendingSpeech;
+      const fullText = `What It Does: ${speechToPlay.text}`;
       setPendingSpeech(null); // Clear state immediately to prevent re-triggering
 
       const promise = speak({
-        text: speechToPlay.text,
+        text: fullText,
         lang: speechToPlay.lang,
         voice: selectedVoice,
       });
@@ -159,11 +160,11 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
 
   const cards = [
       { title: "It's For...", content: medicineInfo.medicineFor, icon: <TagIcon />, key: "medicineFor", variant: 'default' as const },
-      { title: "What It Does", content: medicineInfo.uses, icon: <UsesIcon />, key: "uses", variant: 'default' as const },
+      { title: "What It Does", content: medicineInfo.uses, icon: <UsesIcon />, key: "uses", variant: 'teal' as const },
       ...safetyCard,
-      { title: "Ingredients", content: medicineInfo.composition, icon: <PillIcon />, key: "composition", variant: 'default' as const },
+      { title: "Ingredients", content: medicineInfo.composition, icon: <PillIcon />, key: "composition", variant: 'purple' as const },
       { title: "Side Effects", content: medicineInfo.sideEffects, icon: <WarningIcon />, key: "sideEffects", variant: 'warning' as const },
-      { title: "When to Take It", content: medicineInfo.timeToTake, icon: <ClockIcon />, key: "timeToTake", variant: 'default' as const },
+      { title: "When to Take It", content: medicineInfo.timeToTake, icon: <ClockIcon />, key: "timeToTake", variant: 'orange' as const },
       {
           title: "Heads Up!",
           content: medicineInfo.disclaimer,
@@ -196,8 +197,8 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
                 content={card.content} 
                 icon={card.icon} 
                 variant={card.variant}
-                onToggleSpeak={card.key === 'uses' && hasSpeechSupport ? () => handleToggleSpeak(card.content, card.title) : undefined}
-                isSpeaking={card.key === 'uses' && isSpeaking && speakingText === `${card.title}: ${card.content}`}
+                onToggleSpeak={card.variant !== 'disclaimer' && hasSpeechSupport ? () => handleToggleSpeak(card.content, card.title) : undefined}
+                isSpeaking={isSpeaking && speakingText === `${card.title}: ${card.content}`}
                 highlightForAutoplay={autoplayFailed && card.key === 'uses'}
             />
         </div>

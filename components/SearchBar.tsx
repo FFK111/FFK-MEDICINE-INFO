@@ -54,7 +54,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
             type="text"
             value={condition}
             onChange={(e) => setCondition(e.target.value)}
-            placeholder="Optional: Any health conditions? (e.g., pregnancy)"
+            placeholder="Optional: Any health conditions? (e.g., kidney issue)"
             className="w-full p-3 bg-white border-2 border-border-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary-blue)] text-sm text-text-dark placeholder-slate-400 transition-all"
             disabled={isLoading}
         />

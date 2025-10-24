@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
       className="w-full text-center py-4 mt-auto bg-white/70 backdrop-blur-lg border-t-2 border-border-dark animate-pop-in-bounce"
       style={{ animationDelay: '300ms' }}
     >
-      <p className="text-slate-600 text-sm font-semibold">c faisal firoz khan</p>
+      <p className="text-slate-600 text-sm font-semibold">copyright 2025 faisal firoz khan</p>
     </footer>
   );
 };

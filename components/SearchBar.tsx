@@ -36,11 +36,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
     try {
       const medicineName = await identifyMedicineFromImage(file);
       setQuery(medicineName); // Set the identified name in the search bar
-      // No need to call onSearch here, it will be called on form submit
+      onSearch(medicineName, file, condition); // Auto-search on success
     } catch (e) {
       console.error("Failed to identify medicine from image", e);
       // Let user submit with just the image if identification fails
       setQuery('Unable to identify, searching by image...');
+      onSearch('', file, condition); // Auto-search on failure
     } finally {
       setIsIdentifyingImage(false);
     }

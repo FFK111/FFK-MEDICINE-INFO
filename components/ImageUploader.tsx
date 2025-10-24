@@ -92,7 +92,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onFileSelect, imag
         <div className="text-center p-4 text-text-dark">
           <div className="w-12 h-12 mx-auto text-primary-blue"><CameraIcon /></div>
           <p className="mt-2 font-bold font-heading text-lg">
-            {isDragging ? 'Drop it here!' : 'Drop an Image'}
+            {isDragging ? 'Drop it here!' : 'SCAN MEDICINE'}
           </p>
           <p className="text-sm font-semibold text-slate-600">or click to upload</p>
         </div>

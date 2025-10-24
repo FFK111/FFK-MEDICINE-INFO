@@ -7,7 +7,7 @@ interface InfoCardProps {
   title: string;
   content: string;
   icon: React.ReactNode;
-  variant?: 'default' | 'disclaimer' | 'safety';
+  variant?: 'default' | 'disclaimer' | 'safety' | 'warning';
   onToggleSpeak?: () => void;
   isSpeaking: boolean;
   highlightForAutoplay?: boolean;
@@ -17,66 +17,71 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
 
   const variants = {
     default: {
-      shadow: 'hover:shadow-[0_0_25px_var(--glow-color-blue)]',
-      iconBg: 'bg-gradient-to-br from-slate-700/80 to-slate-800/50',
-      iconText: 'text-[var(--brand-electric-blue)]',
-      titleText: 'text-slate-100',
-      contentText: 'text-slate-300 font-semibold',
-      speakingAnimation: 'animate-pulse-glow-multi'
+      border: 'border-primary-blue',
+      iconBg: 'bg-primary-blue',
+      iconText: 'text-white',
+      titleText: 'text-text-dark',
+      contentText: 'text-slate-600',
+    },
+    warning: {
+      border: 'border-accent-pink',
+      iconBg: 'bg-accent-pink',
+      iconText: 'text-white',
+      titleText: 'text-text-dark',
+      contentText: 'text-slate-600',
     },
     disclaimer: {
-      shadow: 'hover:shadow-[0_0_25px_var(--glow-color-amber)]',
-      iconBg: 'bg-gradient-to-br from-slate-700/80 to-slate-800/50',
-      iconText: 'text-amber-400',
-      titleText: 'text-slate-100',
-      contentText: 'text-slate-400',
-      speakingAnimation: 'animate-pulse-glow-multi'
+      border: 'border-accent-yellow',
+      iconBg: 'bg-accent-yellow',
+      iconText: 'text-border-dark',
+      titleText: 'text-text-dark',
+      contentText: 'text-slate-500',
     },
     safety: {
-      shadow: 'hover:shadow-[0_0_25px_var(--glow-color-emerald)]',
-      iconBg: 'bg-gradient-to-br from-slate-700/80 to-slate-800/50',
-      iconText: 'text-emerald-400',
-      titleText: 'text-slate-100',
-      contentText: 'text-slate-300 font-semibold',
-      speakingAnimation: 'animate-pulse-glow-multi'
+      border: 'border-accent-green',
+      iconBg: 'bg-accent-green',
+      iconText: 'text-white',
+      titleText: 'text-text-dark',
+      contentText: 'text-slate-600',
     },
   };
   
-  const theme = variants[variant];
+  const theme = variants[variant] || variants.default;
   const isDisclaimer = variant === 'disclaimer';
   const showSpeakButton = !isDisclaimer && onToggleSpeak;
-  const contentFontSize = isDisclaimer ? 'text-sm' : 'text-lg';
+  const contentFontSize = isDisclaimer ? 'text-sm' : 'text-base';
+  const contentFontWeight = 'font-semibold';
 
-  const speakingAnimation = isSpeaking ? theme.speakingAnimation : '';
+  const speakingAnimation = isSpeaking ? 'animate-pulse-glow-multi' : '';
 
   return (
     <div
       className={`
-        group relative rounded-2xl p-5 shadow-lg
-        bg-slate-900/50 backdrop-blur-md glow-border
-        transition-all duration-300 ease-out
-        transform hover:-translate-y-1 hover:scale-[1.02]
-        ${theme.shadow} ${speakingAnimation}
+        group relative rounded-2xl p-5
+        bg-white comic-border comic-shadow
+        transition-all duration-200 ease-in-out
+        transform hover:-translate-y-1.5 hover:shadow-[8px_8px_0px_var(--border-dark)]
+        ${theme.border} ${speakingAnimation}
       `}
     >
       <div className="relative z-10">
         <div className="flex items-center space-x-4 mb-4">
-          <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${theme.iconBg} border border-white/5`}>
-            <div className={`${theme.iconText} w-6 h-6`}>
+          <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${theme.iconBg} comic-border border-border-dark transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6`}>
+            <div className={`${theme.iconText} w-7 h-7`}>
               {icon}
             </div>
           </div>
-          <h3 className={`flex-grow text-xl font-extrabold uppercase tracking-wider ${theme.titleText}`}>
+          <h3 className={`flex-grow text-2xl font-bold font-heading ${theme.titleText}`}>
             {title}
           </h3>
           {showSpeakButton && (
             <button
               onClick={onToggleSpeak}
               aria-label={isSpeaking ? 'Stop reading' : 'Read aloud'}
-              className={`group p-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--brand-electric-blue)] focus:ring-offset-slate-900 transform hover:scale-110 active:scale-95 border hover:shadow-[0_0_15px_var(--glow-color-blue)] ${
+              className={`group p-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-blue)] focus:ring-offset-white transform hover:scale-110 active:scale-95 comic-border border-border-dark comic-shadow-sm ${
                 isSpeaking
-                  ? 'bg-[var(--brand-electric-blue)]/70 backdrop-blur-xl border-white/20 text-white'
-                  : 'bg-slate-700/60 backdrop-blur-xl border-white/10 text-slate-200 hover:bg-slate-700'
+                  ? 'bg-accent-pink text-white'
+                  : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
               } ${highlightForAutoplay ? 'animate-pulse-button-glow' : ''}`}
             >
               <div className="w-6 h-6">
@@ -96,7 +101,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, icon, varian
             </button>
           )}
         </div>
-        <p className={`${contentFontSize} whitespace-pre-wrap ${theme.contentText}`}>
+        <p className={`${contentFontSize} ${contentFontWeight} whitespace-pre-wrap ${theme.contentText}`}>
           {content}
         </p>
       </div>

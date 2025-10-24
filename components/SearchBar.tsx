@@ -19,7 +19,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
       setImageFile(file);
       setQuery(''); // Clear text query, as image is the source of truth now.
       
-      // No more two-step process. Directly call the main search handler.
       onSearch('', file, condition);
     }
   };
@@ -33,7 +32,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
     onSearch(query, imageFile, condition);
   };
   
-  const currentPlaceholder = isLoading ? "Analyzing..." : "Enter medicine name or upload image";
+  const currentPlaceholder = isLoading ? "Thinking..." : "Enter medicine name or pick a photo!";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -48,15 +47,15 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
                 }
             }}
             placeholder={currentPlaceholder}
-            className="w-full h-14 pl-6 pr-6 bg-slate-800/70 border-2 border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all text-lg"
+            className="w-full h-14 pl-6 pr-6 bg-white comic-border rounded-full focus:outline-none focus:ring-4 focus:ring-[var(--accent-yellow)] text-text-dark placeholder-slate-500 transition-all text-lg font-semibold"
             disabled={isLoading}
         />
         <input
             type="text"
             value={condition}
             onChange={(e) => setCondition(e.target.value)}
-            placeholder="Optional: Check safety for a condition (e.g., pregnancy)"
-            className="w-full p-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-sm text-slate-200 placeholder-slate-500 transition-all"
+            placeholder="Optional: Any health conditions? (e.g., pregnancy)"
+            className="w-full p-3 bg-white border-2 border-border-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary-blue)] text-sm text-text-dark placeholder-slate-400 transition-all"
             disabled={isLoading}
         />
       </div>
@@ -67,17 +66,17 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => 
           onClick={handleImageButtonClick}
           disabled={isLoading}
           aria-label="Upload medicine image"
-          className="h-14 w-full rounded-full bg-slate-800/70 border-2 border-slate-700 text-slate-300 hover:text-[var(--brand-electric-blue)] hover:border-[var(--brand-electric-blue)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] font-bold"
+          className="h-14 w-full rounded-full bg-accent-yellow comic-border comic-shadow-sm comic-shadow-sm-hover text-border-dark transition-all duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:-translate-y-1 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-yellow font-bold text-lg"
         >
           <>
             <div className="w-6 h-6"><CameraIcon /></div>
-            <span className="ml-3">Identify by Image</span>
+            <span className="ml-3">Photo ID</span>
           </>
         </button>
         <button
           type="submit"
           disabled={isLoading || (!query && !imageFile)}
-          className="h-14 w-full rounded-full bg-gradient-to-r from-[var(--brand-electric-blue)] to-[var(--brand-magenta)] text-white font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-lg shadow-[var(--glow-color-blue)]/50 hover:shadow-[var(--glow-color-blue)] disabled:shadow-none text-lg"
+          className="h-14 w-full rounded-full bg-gradient-to-r from-[var(--primary-blue)] to-[var(--accent-pink)] text-white comic-border comic-shadow comic-shadow-hover font-bold transition-all duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:-translate-y-1 active:translate-y-0.5 text-lg"
         >
           {isLoading ? (
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>

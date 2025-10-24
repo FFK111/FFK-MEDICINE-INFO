@@ -9,6 +9,7 @@ import { ShieldIcon } from './icons/ShieldIcon';
 import { SafetyIcon } from './icons/SafetyIcon';
 import { SkeletonCard } from './SkeletonCard';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
+import { TagIcon } from './icons/TagIcon';
 
 interface ResponseDisplayProps {
   isLoading: boolean;
@@ -70,7 +71,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     cancel(); 
     setAutoplayFailed(false); // Reset on new results
     if (medicineInfo && spokenMedicineInfo.current !== medicineInfo) {
-      const textToSpeak = `This medicine is for ${medicineInfo.medicineFor}. Uses: ${medicineInfo.uses}`;
+      const textToSpeak = medicineInfo.uses; // ONLY read the uses
       setPendingSpeech({ text: textToSpeak, lang: language });
       spokenMedicineInfo.current = medicineInfo;
     }
@@ -85,23 +86,18 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
       const speechToPlay = pendingSpeech;
       setPendingSpeech(null); // Clear state immediately to prevent re-triggering
 
-      speak({
+      const promise = speak({
         text: speechToPlay.text,
         lang: speechToPlay.lang,
         voice: selectedVoice,
       });
 
-      // Heuristic to detect if autoplay was blocked by the browser.
-      const autoplayCheckTimeout = setTimeout(() => {
-        // If nothing is speaking after a delay and results are still present,
-        // we can assume autoplay was blocked by the browser.
-        if (!speechSynthesis.speaking && spokenMedicineInfo.current) {
-            console.warn("Autoplay was likely blocked by the browser.");
-            setAutoplayFailed(true);
+      promise.catch(() => {
+        console.warn("Autoplay was likely blocked by the browser.");
+        if (spokenMedicineInfo.current) {
+          setAutoplayFailed(true);
         }
-      }, 500); // Increased delay for more reliability
-
-      return () => clearTimeout(autoplayCheckTimeout);
+      });
     }
   }, [pendingSpeech, selectedVoice, speak]);
 
@@ -120,18 +116,18 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
 
   if (error) {
     return (
-      <div className="text-center p-8 bg-red-900/40 backdrop-blur-xl border border-red-500/50 text-red-200 rounded-2xl shadow-lg animate-card-entry">
-        <h3 className="font-bold text-lg text-red-100">Error</h3>
-        <p>{error}</p>
+      <div className="text-center p-8 bg-accent-pink/20 comic-border border-accent-pink text-red-700 rounded-2xl animate-pop-in-bounce">
+        <h3 className="font-heading font-bold text-2xl text-red-800">Whoops!</h3>
+        <p className="font-semibold mt-2">{error}</p>
       </div>
     );
   }
 
   if (!medicineInfo) {
     return (
-      <div className="text-center p-8 bg-slate-800/40 backdrop-blur-xl border border-white/10 text-slate-300 rounded-2xl shadow-lg">
-        <h3 className="font-semibold text-lg text-slate-100">Welcome!</h3>
-        <p>Enter a medicine name or upload a photo to get started.</p>
+      <div className="text-center p-8 bg-primary-blue/10 comic-border border-primary-blue text-slate-700 rounded-2xl">
+        <h3 className="font-heading font-semibold text-2xl text-slate-800">Ready to help!</h3>
+        <p className="mt-1">What medicine are you curious about today?</p>
       </div>
     );
   }
@@ -140,7 +136,6 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     const fullText = `${title}: ${text}`;
     if (!selectedVoice) return;
     
-    // The user has interacted, so we can clear the autoplay failed state.
     if (autoplayFailed) {
         setAutoplayFailed(false);
     }
@@ -155,7 +150,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   const hasSpeechSupport = !!selectedVoice;
 
   const safetyCard = medicineInfo.safetyInCondition && medicineInfo.conditionContext ? [{
-      title: `Safety in ${medicineInfo.conditionContext}`,
+      title: `Safety for ${medicineInfo.conditionContext}`,
       content: medicineInfo.safetyInCondition,
       icon: <SafetyIcon />,
       key: "safety",
@@ -163,14 +158,14 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   }] : [];
 
   const cards = [
-      { title: "Medicine For", content: medicineInfo.medicineFor, icon: <UsesIcon />, key: "medicineFor", variant: 'default' as const },
-      { title: "Uses", content: medicineInfo.uses, icon: <UsesIcon />, key: "uses", variant: 'default' as const },
+      { title: "It's For...", content: medicineInfo.medicineFor, icon: <TagIcon />, key: "medicineFor", variant: 'default' as const },
+      { title: "What It Does", content: medicineInfo.uses, icon: <UsesIcon />, key: "uses", variant: 'default' as const },
       ...safetyCard,
-      { title: "Composition", content: medicineInfo.composition, icon: <PillIcon />, key: "composition", variant: 'default' as const },
-      { title: "Major Side Effects", content: medicineInfo.sideEffects, icon: <WarningIcon />, key: "sideEffects", variant: 'default' as const },
-      { title: "Recommended Time to Take", content: medicineInfo.timeToTake, icon: <ClockIcon />, key: "timeToTake", variant: 'default' as const },
+      { title: "Ingredients", content: medicineInfo.composition, icon: <PillIcon />, key: "composition", variant: 'default' as const },
+      { title: "Side Effects", content: medicineInfo.sideEffects, icon: <WarningIcon />, key: "sideEffects", variant: 'warning' as const },
+      { title: "When to Take It", content: medicineInfo.timeToTake, icon: <ClockIcon />, key: "timeToTake", variant: 'default' as const },
       {
-          title: "Disclaimer",
+          title: "Heads Up!",
           content: medicineInfo.disclaimer,
           icon: <ShieldIcon />,
           key: "disclaimer",
@@ -182,16 +177,15 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
     <div className="space-y-4">
       {autoplayFailed && (
         <div 
-          className="bg-amber-900/40 backdrop-blur-xl border-2 border-amber-500/50 text-amber-200 text-center p-4 rounded-2xl shadow-lg animate-fade-in flex flex-col items-center"
-          style={{ boxShadow: '0 0 25px var(--glow-color-amber)' }}
+          className="bg-accent-yellow/30 border-2 border-amber-500 text-amber-800 text-center p-4 rounded-2xl animate-pop-in-bounce flex flex-col items-center comic-border border-amber-600"
           role="alert"
         >
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 text-amber-400"><WarningIcon /></div>
-            <p className="font-bold text-base text-amber-100">Audio Paused by Browser</p>
+            <div className="w-6 h-6 text-amber-700"><WarningIcon /></div>
+            <p className="font-bold font-heading text-base text-amber-900">Audio Paused!</p>
           </div>
-          <p className="text-sm mt-2">
-            Tap the pulsing speaker icon on the "Medicine For" card to begin playback.
+          <p className="text-sm mt-2 font-semibold">
+            Tap the speaker on the 'What It Does' card to start listening!
           </p>
         </div>
       )}
@@ -202,9 +196,9 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
                 content={card.content} 
                 icon={card.icon} 
                 variant={card.variant}
-                onToggleSpeak={hasSpeechSupport ? () => handleToggleSpeak(card.content, card.title) : undefined}
-                isSpeaking={isSpeaking && speakingText === `${card.title}: ${card.content}`}
-                highlightForAutoplay={autoplayFailed && card.key === 'medicineFor'}
+                onToggleSpeak={card.key === 'uses' && hasSpeechSupport ? () => handleToggleSpeak(card.content, card.title) : undefined}
+                isSpeaking={card.key === 'uses' && isSpeaking && speakingText === `${card.title}: ${card.content}`}
+                highlightForAutoplay={autoplayFailed && card.key === 'uses'}
             />
         </div>
       ))}

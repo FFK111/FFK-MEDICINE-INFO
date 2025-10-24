@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
   const handleSearch = useCallback(async (query: string, imageFile: File | null, condition: string) => {
     if (!query && !imageFile) {
-      setError('Please enter a medicine name or upload an image.');
+      setError('Please type a medicine name or pick a photo!');
       return;
     }
 
@@ -37,7 +37,7 @@ const App: React.FC = () => {
       setMedicineResult({ info: result, lang: langForSearch });
     } catch (err) {
       console.error(err);
-      setError('An error occurred while fetching information. Please try again.');
+      setError('Uh oh! Something went wrong. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -65,16 +65,19 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="relative min-h-screen font-sans text-slate-200">
+    <div className="relative min-h-screen font-sans text-text-dark overflow-x-hidden">
       <Background />
-      <div className="relative z-10 flex flex-col min-h-screen animate-fade-in">
+      <div className="relative z-10 flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center w-full">
-            <p className="text-center text-slate-300 mb-8 text-lg md:text-xl max-w-3xl">
-              Clarity in medicine. Your guide for instant, easy-to-understand pharmaceutical information.
+        <main
+          className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center w-full animate-pop-in-bounce"
+          style={{ animationDelay: '150ms' }}
+        >
+            <p className="text-center text-slate-600 mb-8 text-lg md:text-xl max-w-3xl font-semibold">
+              Your friendly guide to understanding medicine, made simple and clear!
             </p>
             
-            <div className="w-full max-w-4xl bg-slate-950/50 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 glow-border">
+            <div className="w-full max-w-4xl bg-white rounded-2xl p-4 sm:p-6 comic-border comic-shadow">
                 <TabSelector activeTab={activeTab} onTabChange={setActiveTab} />
                 
                 <div className="mt-6 grid">

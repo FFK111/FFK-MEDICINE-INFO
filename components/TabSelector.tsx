@@ -30,9 +30,9 @@ export const TabSelector: React.FC<TabSelectorProps> = ({ activeTab, onTabChange
     }, [activeTab]);
 
     return (
-        <div className="relative w-full flex p-1 bg-slate-800 rounded-full border border-slate-700">
+        <div className="relative w-full flex p-1 bg-slate-100 rounded-full border-2 border-border-dark">
             <span
-                className="absolute top-1 bottom-1 bg-gradient-to-r from-[var(--brand-electric-blue)] to-[var(--brand-magenta)] rounded-full transition-all duration-300 ease-in-out"
+                className="absolute top-1 bottom-1 bg-gradient-to-r from-[var(--primary-blue)] to-[var(--accent-pink)] rounded-full transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
                 style={indicatorStyle}
             ></span>
             {tabs.map((tab, index) => (
@@ -40,10 +40,10 @@ export const TabSelector: React.FC<TabSelectorProps> = ({ activeTab, onTabChange
                     ref={el => { tabsRef.current[index] = el; }}
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
-                    className={`relative z-10 w-full flex items-center justify-center space-x-3 px-2 sm:px-4 py-2.5 font-bold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white/50 text-sm sm:text-base rounded-full ${
+                    className={`relative z-10 w-full flex items-center justify-center space-x-3 px-2 sm:px-4 py-2.5 font-bold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-yellow text-sm sm:text-base rounded-full font-heading ${
                         activeTab === tab.id
                             ? 'text-white'
-                            : 'text-slate-300 hover:text-white'
+                            : 'text-text-dark hover:text-primary-blue'
                     }`}
                 >
                     <div className="w-5 h-5 flex-shrink-0">{tab.icon}</div>

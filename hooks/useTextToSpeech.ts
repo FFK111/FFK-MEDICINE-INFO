@@ -22,34 +22,41 @@ export const useTextToSpeech = () => {
     };
   }, []);
 
-  const speak = useCallback(({ text, lang, voice }: SpeakParams) => {
-    if (speechSynthesis.speaking) {
-      speechSynthesis.cancel();
-    }
-    
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang;
-    if (voice) {
-      utterance.voice = voice;
-    }
-    
-    utterance.onstart = () => {
-      setIsSpeaking(true);
-      setSpeakingText(text);
-    };
+  const speak = useCallback(({ text, lang, voice }: SpeakParams): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+      }
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang;
+      if (voice) {
+        utterance.voice = voice;
+      }
+      
+      utterance.onstart = () => {
+        setIsSpeaking(true);
+        setSpeakingText(text);
+        resolve();
+      };
 
-    utterance.onend = () => {
-      setIsSpeaking(false);
-      setSpeakingText(null);
-    };
+      utterance.onend = () => {
+        setIsSpeaking(false);
+        setSpeakingText(null);
+      };
 
-    utterance.onerror = (event) => {
-      console.error('SpeechSynthesisUtterance.onerror', event);
-      setIsSpeaking(false);
-      setSpeakingText(null);
-    };
-
-    speechSynthesis.speak(utterance);
+      utterance.onerror = (event) => {
+        console.error('SpeechSynthesisUtterance.onerror', event);
+        setIsSpeaking(false);
+        setSpeakingText(null);
+        reject(event);
+      };
+      
+      // A small delay before speaking can help in some browsers
+      setTimeout(() => {
+        speechSynthesis.speak(utterance);
+      }, 100);
+    });
   }, []);
 
   const cancel = useCallback(() => {

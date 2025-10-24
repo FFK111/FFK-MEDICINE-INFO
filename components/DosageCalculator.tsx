@@ -21,7 +21,7 @@ export const DosageCalculator: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!medicine || !age || !weight) {
-            setError('Please fill in all fields.');
+            setError('Please fill in all the boxes!');
             return;
         }
 
@@ -57,9 +57,9 @@ export const DosageCalculator: React.FC = () => {
         }
         if (error) {
             return (
-                <div className="mt-8 text-center p-8 bg-red-900/40 backdrop-blur-xl border border-red-500/50 text-red-200 rounded-2xl shadow-lg animate-card-entry">
-                    <h3 className="font-bold text-lg text-red-100">Error</h3>
-                    <p>{error}</p>
+                <div className="mt-8 text-center p-8 bg-accent-pink/20 comic-border border-accent-pink text-red-700 rounded-2xl animate-pop-in-bounce">
+                    <h3 className="font-heading font-bold text-2xl text-red-800">Whoops!</h3>
+                    <p className="font-semibold mt-2">{error}</p>
                 </div>
             );
         }
@@ -77,7 +77,7 @@ export const DosageCalculator: React.FC = () => {
                     </div>
                      <div className="animate-card-entry" style={{ animationDelay: '100ms' }}>
                         <InfoCard
-                            title="Reasoning"
+                            title="How it's Calculated"
                             content={result.reasoning}
                             icon={<UsesIcon />}
                             isSpeaking={false}
@@ -88,12 +88,13 @@ export const DosageCalculator: React.FC = () => {
                             title="Important Notes"
                             content={result.importantNotes}
                             icon={<WarningIcon />}
+                            variant="warning"
                             isSpeaking={false}
                         />
                     </div>
                      <div className="animate-card-entry" style={{ animationDelay: '300ms' }}>
                         <InfoCard
-                            title="CRITICAL DISCLAIMER"
+                            title="Super Important!"
                             content={result.disclaimer}
                             icon={<ShieldIcon />}
                             variant="disclaimer"
@@ -115,7 +116,7 @@ export const DosageCalculator: React.FC = () => {
                         value={medicine}
                         onChange={e => setMedicine(e.target.value)}
                         placeholder="Medicine Name"
-                        className="h-12 px-4 bg-slate-800/70 border-2 border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all"
+                        className="h-12 px-4 bg-white comic-border rounded-lg focus:outline-none focus:ring-4 focus:ring-accent-yellow text-text-dark placeholder-slate-400 transition-all font-semibold"
                         disabled={isLoading}
                     />
                     <input
@@ -123,7 +124,7 @@ export const DosageCalculator: React.FC = () => {
                         value={age}
                         onChange={e => setAge(e.target.value)}
                         placeholder="Age (years)"
-                        className="h-12 px-4 bg-slate-800/70 border-2 border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all"
+                        className="h-12 px-4 bg-white comic-border rounded-lg focus:outline-none focus:ring-4 focus:ring-accent-yellow text-text-dark placeholder-slate-400 transition-all font-semibold"
                         disabled={isLoading}
                         min="0"
                     />
@@ -132,7 +133,7 @@ export const DosageCalculator: React.FC = () => {
                         value={weight}
                         onChange={e => setWeight(e.target.value)}
                         placeholder="Weight (kg)"
-                        className="h-12 px-4 bg-slate-800/70 border-2 border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-electric-blue)] focus:border-[var(--brand-electric-blue)] text-slate-100 placeholder-slate-400 transition-all"
+                        className="h-12 px-4 bg-white comic-border rounded-lg focus:outline-none focus:ring-4 focus:ring-accent-yellow text-text-dark placeholder-slate-400 transition-all font-semibold"
                         disabled={isLoading}
                         min="0"
                     />
@@ -140,14 +141,14 @@ export const DosageCalculator: React.FC = () => {
                 <button
                     type="submit"
                     disabled={isLoading || !medicine || !age || !weight}
-                    className="w-full h-14 p-3 rounded-full bg-gradient-to-r from-[var(--brand-electric-blue)] to-[var(--brand-magenta)] text-white font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105 active:scale-95 shadow-lg shadow-[var(--glow-color-blue)]/50 hover:shadow-[var(--glow-color-blue)] disabled:shadow-none"
+                    className="w-full h-14 p-3 rounded-full bg-gradient-to-r from-[var(--primary-blue)] to-[var(--accent-pink)] text-white font-bold transition-all duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:-translate-y-1 active:translate-y-0.5 comic-border comic-shadow comic-shadow-hover font-heading"
                 >
                     {isLoading ? (
                         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
                     ) : (
                         <>
                             <div className="w-7 h-7"><CalculatorIcon /></div>
-                            <span className="ml-2 text-lg">Calculate Dosage</span>
+                            <span className="ml-2 text-xl">Calculate!</span>
                         </>
                     )}
                 </button>

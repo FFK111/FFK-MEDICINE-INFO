@@ -2,8 +2,11 @@ import React from 'react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full text-center py-4 mt-auto bg-slate-900/80 backdrop-blur-lg border-t border-white/5">
-      <p className="text-slate-500 text-sm">© Faisal Firoz Khan</p>
+    <footer
+      className="w-full text-center py-4 mt-auto bg-white/70 backdrop-blur-lg border-t-2 border-border-dark animate-pop-in-bounce"
+      style={{ animationDelay: '300ms' }}
+    >
+      <p className="text-slate-600 text-sm font-semibold">c faisal firoz khan</p>
     </footer>
   );
 };

@@ -77,7 +77,7 @@ const App: React.FC = () => {
               Your friendly guide to understanding medicine, made simple and clear!
             </p>
             
-            <div className="w-full max-w-4xl bg-white rounded-2xl p-4 sm:p-6 comic-border comic-shadow">
+            <div className="w-full max-w-4xl bg-white/20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 comic-border comic-shadow">
                 <TabSelector activeTab={activeTab} onTabChange={setActiveTab} />
                 
                 <div className="mt-6 grid">

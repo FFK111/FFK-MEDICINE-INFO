@@ -17,61 +17,54 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, variant = 'd
   const variants = {
     default: {
       border: 'border-primary-blue',
-      iconBg: 'bg-primary-blue',
-      iconText: 'text-white',
+      background: 'bg-primary-blue/10',
       titleText: 'text-text-dark',
-      contentText: 'text-slate-600',
+      contentText: 'text-slate-700',
     },
     warning: {
       border: 'border-accent-pink',
-      iconBg: 'bg-accent-pink',
-      iconText: 'text-white',
+      background: 'bg-accent-pink/10',
       titleText: 'text-text-dark',
-      contentText: 'text-slate-600',
+      contentText: 'text-slate-700',
     },
     disclaimer: {
       border: 'border-accent-yellow',
-      iconBg: 'bg-accent-yellow',
-      iconText: 'text-border-dark',
+      background: 'bg-accent-yellow/10',
       titleText: 'text-text-dark',
-      contentText: 'text-slate-500',
+      contentText: 'text-slate-600',
     },
     safety: {
       border: 'border-accent-green',
-      iconBg: 'bg-accent-green',
-      iconText: 'text-white',
+      background: 'bg-accent-green/10',
       titleText: 'text-text-dark',
-      contentText: 'text-slate-600',
+      contentText: 'text-slate-700',
     },
     teal: {
       border: 'border-accent-teal',
-      iconBg: 'bg-accent-teal',
-      iconText: 'text-white',
+      background: 'bg-accent-teal/10',
       titleText: 'text-text-dark',
-      contentText: 'text-slate-600',
+      contentText: 'text-slate-700',
     },
     purple: {
       border: 'border-accent-purple',
-      iconBg: 'bg-accent-purple',
-      iconText: 'text-white',
+      background: 'bg-accent-purple/10',
       titleText: 'text-text-dark',
-      contentText: 'text-slate-600',
+      contentText: 'text-slate-700',
     },
     orange: {
       border: 'border-accent-orange',
-      iconBg: 'bg-accent-orange',
-      iconText: 'text-white',
+      background: 'bg-accent-orange/10',
       titleText: 'text-text-dark',
-      contentText: 'text-slate-600',
+      contentText: 'text-slate-700',
     },
   };
   
   const theme = variants[variant] || variants.default;
   const showSpeakButton = !!onToggleSpeak;
   const isDisclaimer = variant === 'disclaimer';
-  const contentFontSize = isDisclaimer ? 'text-sm' : 'text-base';
+  const contentFontSize = isDisclaimer ? 'text-base' : 'text-lg';
 
-  const cardClasses = `relative w-full bg-white/90 backdrop-blur-sm p-4 sm:p-5 rounded-2xl comic-border comic-shadow-sm transition-all duration-300 transform hover:-translate-y-1 hover:comic-shadow ${theme.border} ${highlightForAutoplay ? 'animate-pulse-glow-multi' : ''}`;
+  const cardClasses = `relative w-full p-4 sm:p-5 rounded-2xl comic-border comic-shadow-sm transition-all duration-300 transform hover:-translate-y-1 hover:comic-shadow ${theme.border} ${theme.background} backdrop-blur-lg ${highlightForAutoplay ? 'animate-pulse-glow-multi' : ''}`;
 
   return (
     <div className={cardClasses}>
@@ -83,7 +76,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, variant = 'd
             <button
               onClick={onToggleSpeak}
               className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-primary-blue ${
-                isSpeaking ? 'bg-accent-pink text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                isSpeaking ? 'bg-accent-pink text-white' : 'bg-slate-100/50 text-slate-600 hover:bg-slate-200/70'
               }`}
               aria-label={isSpeaking ? 'Stop speaking' : 'Speak content'}
             >

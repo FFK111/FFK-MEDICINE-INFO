@@ -11,7 +11,7 @@ const EASING_FUNCTIONS = [
 
 const BackgroundShape: React.FC<{ index: number }> = ({ index }) => {
   const duration = Math.random() * 25 + 20; // 20s to 45s
-  const delay = Math.random() * 20; // 0s to 20s delay
+  const delay = Math.random() * 5; // 0s to 5s delay for faster start
   const size = Math.random() * 60 + 20; // 20px to 80px
   const left = Math.random() * 100; // 0% to 100%
   const color = COLORS[Math.floor(Math.random() * COLORS.length)];

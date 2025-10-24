@@ -68,6 +68,26 @@ const languageMap: Record<Language, string> = {
     [Language.URDU]: 'Urdu',
 };
 
+export async function identifyMedicineFromImage(imageFile: File): Promise<string> {
+  const base64Image = await fileToBase64(imageFile);
+  const parts = [
+    {
+      inlineData: {
+        mimeType: imageFile.type,
+        data: base64Image,
+      },
+    },
+    { text: "What is the brand name of the medicine in this image? Respond with ONLY the name of the medicine and nothing else. Do not add any extra words, formatting, or explanations." },
+  ];
+
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: { parts: parts },
+  });
+
+  return response.text.trim();
+}
+
 export async function getMedicineInfo(
   query: string,
   language: Language,

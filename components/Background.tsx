@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SHAPES_COUNT = 15;
+const SHAPES_COUNT = 20;
 const COLORS = ['--primary-blue', '--accent-yellow', '--accent-pink', '--accent-green', '--accent-purple', '--accent-teal', '--accent-orange'];
 const EASING_FUNCTIONS = [
   'ease-in-out',
@@ -11,7 +11,7 @@ const EASING_FUNCTIONS = [
 
 const BackgroundShape: React.FC<{ index: number }> = ({ index }) => {
   const duration = Math.random() * 25 + 20; // 20s to 45s
-  const delay = Math.random() * 5; // 0s to 5s delay for faster start
+  const delay = Math.random() * 0.5; // 0s to 0.5s delay for a much faster start
   const size = Math.random() * 60 + 20; // 20px to 80px
   const left = Math.random() * 100; // 0% to 100%
   const color = COLORS[Math.floor(Math.random() * COLORS.length)];
@@ -32,7 +32,7 @@ const BackgroundShape: React.FC<{ index: number }> = ({ index }) => {
     animation: `float-up-organic ${duration}s ${easing} ${delay}s infinite`,
     '--x-drift': `${xDrift}px`,
     opacity: 0,
-    filter: 'blur(5px)',
+    filter: 'blur(8px)',
   };
 
   return <span style={style}></span>;

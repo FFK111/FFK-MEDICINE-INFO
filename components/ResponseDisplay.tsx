@@ -1,15 +1,10 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { MedicineInfo, Language } from '../types';
 import { InfoCard } from './InfoCard';
-import { PillIcon } from './icons/PillIcon';
-import { UsesIcon } from './icons/UsesIcon';
 import { WarningIcon } from './icons/WarningIcon';
-import { ClockIcon } from './icons/ClockIcon';
-import { ShieldIcon } from './icons/ShieldIcon';
-import { SafetyIcon } from './icons/SafetyIcon';
 import { SkeletonCard } from './SkeletonCard';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
-import { TagIcon } from './icons/TagIcon';
+import { VoiceSelector } from './VoiceSelector';
 
 interface ResponseDisplayProps {
   isLoading: boolean;
@@ -149,6 +144,7 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   };
   
   const hasSpeechSupport = !!selectedVoice;
+  const langVoices = voices.filter(v => v.lang.startsWith(language));
 
   const safetyCard = medicineInfo.safetyInCondition && medicineInfo.conditionContext ? [{
       title: `Safety for ${medicineInfo.conditionContext}`,
@@ -188,8 +184,20 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
           </p>
         </div>
       )}
+
+      {medicineInfo && hasSpeechSupport && langVoices.length > 1 && (
+        <div className="animate-card-entry" style={{ animationDelay: '50ms' }}>
+          <VoiceSelector
+            voices={langVoices}
+            selectedVoice={selectedVoice}
+            onSelectVoice={setSelectedVoice}
+            isDisabled={isSpeaking}
+          />
+        </div>
+      )}
+
       {cards.map((card, index) => (
-        <div key={card.key} className="animate-card-entry" style={{ animationDelay: `${index * 100}ms` }}>
+        <div key={card.key} className="animate-card-entry" style={{ animationDelay: `${(index + 1) * 100}ms` }}>
             <InfoCard 
                 title={card.title} 
                 content={card.content} 

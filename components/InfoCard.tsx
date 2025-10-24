@@ -16,45 +16,45 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, variant = 'd
 
   const variants = {
     default: {
-      border: 'border-primary-blue',
-      background: 'bg-primary-blue/10',
-      titleText: 'text-text-dark',
+      border: 'border-[var(--primary-blue)]',
+      background: 'bg-white',
+      titleText: 'text-[var(--primary-blue)]',
       contentText: 'text-slate-700',
     },
     warning: {
-      border: 'border-accent-pink',
-      background: 'bg-accent-pink/10',
-      titleText: 'text-text-dark',
+      border: 'border-[var(--accent-pink)]',
+      background: 'bg-white',
+      titleText: 'text-[var(--accent-pink)]',
       contentText: 'text-slate-700',
     },
     disclaimer: {
-      border: 'border-accent-yellow',
-      background: 'bg-accent-yellow/10',
-      titleText: 'text-text-dark',
+      border: 'border-[var(--accent-yellow)]',
+      background: 'bg-white',
+      titleText: 'text-amber-600',
       contentText: 'text-slate-600',
     },
     safety: {
-      border: 'border-accent-green',
-      background: 'bg-accent-green/10',
-      titleText: 'text-text-dark',
+      border: 'border-[var(--accent-green)]',
+      background: 'bg-white',
+      titleText: 'text-[var(--accent-green)]',
       contentText: 'text-slate-700',
     },
     teal: {
-      border: 'border-accent-teal',
-      background: 'bg-accent-teal/10',
-      titleText: 'text-text-dark',
+      border: 'border-[var(--accent-teal)]',
+      background: 'bg-white',
+      titleText: 'text-[var(--accent-teal)]',
       contentText: 'text-slate-700',
     },
     purple: {
-      border: 'border-accent-purple',
-      background: 'bg-accent-purple/10',
-      titleText: 'text-text-dark',
+      border: 'border-[var(--accent-purple)]',
+      background: 'bg-white',
+      titleText: 'text-[var(--accent-purple)]',
       contentText: 'text-slate-700',
     },
     orange: {
-      border: 'border-accent-orange',
-      background: 'bg-accent-orange/10',
-      titleText: 'text-text-dark',
+      border: 'border-[var(--accent-orange)]',
+      background: 'bg-white',
+      titleText: 'text-[var(--accent-orange)]',
       contentText: 'text-slate-700',
     },
   };
@@ -76,7 +76,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ title, content, variant = 'd
             <button
               onClick={onToggleSpeak}
               className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-primary-blue ${
-                isSpeaking ? 'bg-accent-pink text-white' : 'bg-slate-100/50 text-slate-600 hover:bg-slate-200/70'
+                isSpeaking ? 'bg-accent-pink text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
               aria-label={isSpeaking ? 'Stop speaking' : 'Speak content'}
             >

@@ -152,12 +152,12 @@ export const ResponseDisplay: React.FC<ResponseDisplayProps> = ({ isLoading, err
   }] : [];
 
   const cards = [
-      { title: "It's For...", content: medicineInfo.medicineFor, key: "medicineFor", variant: 'purple' as const },
-      { title: "What It Does", content: medicineInfo.uses, key: "uses", variant: 'teal' as const },
+      { title: "It's For...", content: medicineInfo.medicineFor, key: "medicineFor", variant: 'teal' as const },
+      { title: "What It Does", content: medicineInfo.uses, key: "uses", variant: 'purple' as const },
       ...safetyCard,
-      { title: "Ingredients", content: medicineInfo.composition, key: "composition", variant: 'default' as const },
+      { title: "Ingredients", content: medicineInfo.composition, key: "composition", variant: 'orange' as const },
       { title: "Side Effects", content: medicineInfo.sideEffects, key: "sideEffects", variant: 'warning' as const },
-      { title: "When to Take It", content: medicineInfo.timeToTake, key: "timeToTake", variant: 'orange' as const },
+      { title: "When to Take It", content: medicineInfo.timeToTake, key: "timeToTake", variant: 'default' as const },
       {
           title: "Heads Up!",
           content: medicineInfo.disclaimer,
